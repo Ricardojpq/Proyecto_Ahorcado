@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Carter+One&display=swap" rel="stylesheet" />
+    <script src="/assets/js/helpers.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <nav class="custom-navbar navbar navbar-expand-lg navbar-light  ">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="d-flex justify-content-start">
+                <a class="navbar-brand m-auto" href="#">
+                    <img src="./assets/img/logo.svg" class="brand-img" alt="" aria-label="Casino">
+                    <span class="brand-txt">Casino</span>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link fs-4 fw-bold" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-4 fw-bold" href="#hangman">Ahorcado</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header id="header" >
+        <h1 class="text-center">Ahorcado</h1>
+    </header>
+    <main id="main" class="d-flex rounded">
+        <img src="assets/img/img0.png" alt="ahorcado" id="hangmanImage">
+        <div>
+            <p id="wordToGuess"></p>
+            <button id="play" class="btn btn-dark">Jugar</button>
+            <p id="result"></p>
+            <div id="letters">
+                <button class="btn text-center btn-secondary ">a</button>
+                <button class="btn text-center btn-secondary">b</button>
+                <button class="btn text-center btn-secondary">c</button>
+                <button class="btn text-center btn-secondary">d</button>
+                <button class="btn text-center btn-secondary">e</button>
+                <button class="btn text-center btn-secondary">f</button>
+                <button class="btn text-center btn-secondary">g</button>
+                <button class="btn text-center btn-secondary">h</button>
+                <button class="btn text-center btn-secondary">i</button>
+                <button class="btn text-center btn-secondary">j</button>
+                <button class="btn text-center btn-secondary">k</button>
+                <button class="btn text-center btn-secondary">l</button>
+                <button class="btn text-center btn-secondary">m</button>
+                <button class="btn text-center btn-secondary">n</button>
+                <button class="btn text-center btn-secondary">ñ</button>
+                <button class="btn text-center btn-secondary">o</button>
+                <button class="btn text-center btn-secondary">p</button>
+                <button class="btn text-center btn-secondary">q</button>
+                <button class="btn text-center btn-secondary">r</button>
+                <button class="btn text-center btn-secondary">s</button>
+                <button class="btn text-center btn-secondary">t</button>
+                <button class="btn text-center btn-secondary">u</button>
+                <button class="btn text-center btn-secondary">v</button>
+                <button class="btn text-center btn-secondary">w</button>
+                <button class="btn text-center btn-secondary">x</button>
+                <button class="btn text-center btn-secondary">y</button>
+                <button class="btn text-center btn-secondary">z</button>
+            </div>
+        </div>
+    </main>
+    <footer id="footer">
+
+    </footer>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/assets/js/hangman.js"></script>
+
+</html>
