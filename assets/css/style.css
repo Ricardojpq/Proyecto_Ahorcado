@@ -10,7 +10,7 @@ body {
     font-family: 'Carter One', Arial, Helvetica, sans-serif;
     min-height: 100vh;
 }
-main{
+main #hangmanContainer{
     width: 80%;
     margin: auto;
     padding: 20px;

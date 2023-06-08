@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/custom.css">
     <link href="https://fonts.googleapis.com/css2?family=Carter+One&display=swap" rel="stylesheet" />
+
     <script src="/assets/js/helpers.js"></script>
     <title>Document</title>
 </head>
@@ -40,46 +40,74 @@
             </div>
         </div>
     </nav>
-    <header id="header" >
+    <header id="header">
         <h1 class="text-center">Ahorcado</h1>
     </header>
-    <main id="main" class="d-flex rounded">
-        <img src="assets/img/img0.png" alt="ahorcado" id="hangmanImage">
-        <div>
-            <p id="wordToGuess"></p>
-            <button id="play" class="btn btn-dark">Empezar</button>
-            <p id="result"></p>
-            <div id="letters">
-                <button class="btn text-center btn-secondary ">a</button>
-                <button class="btn text-center btn-secondary">b</button>
-                <button class="btn text-center btn-secondary">c</button>
-                <button class="btn text-center btn-secondary">d</button>
-                <button class="btn text-center btn-secondary">e</button>
-                <button class="btn text-center btn-secondary">f</button>
-                <button class="btn text-center btn-secondary">g</button>
-                <button class="btn text-center btn-secondary">h</button>
-                <button class="btn text-center btn-secondary">i</button>
-                <button class="btn text-center btn-secondary">j</button>
-                <button class="btn text-center btn-secondary">k</button>
-                <button class="btn text-center btn-secondary">l</button>
-                <button class="btn text-center btn-secondary">m</button>
-                <button class="btn text-center btn-secondary">n</button>
-                <button class="btn text-center btn-secondary">ñ</button>
-                <button class="btn text-center btn-secondary">o</button>
-                <button class="btn text-center btn-secondary">p</button>
-                <button class="btn text-center btn-secondary">q</button>
-                <button class="btn text-center btn-secondary">r</button>
-                <button class="btn text-center btn-secondary">s</button>
-                <button class="btn text-center btn-secondary">t</button>
-                <button class="btn text-center btn-secondary">u</button>
-                <button class="btn text-center btn-secondary">v</button>
-                <button class="btn text-center btn-secondary">w</button>
-                <button class="btn text-center btn-secondary">x</button>
-                <button class="btn text-center btn-secondary">y</button>
-                <button class="btn text-center btn-secondary">z</button>
+    <main id="main" class="container">
+        <div class=" d-flex rounded" id="hangmanContainer">
+            <img src="assets/img/img0.png" alt="ahorcado" id="hangmanImage">
+            <div>
+                <p id="wordToGuess"></p>
+                <button id="play" class="btn btn-dark">Empezar</button>
+                <p id="result"></p>
+                <div id="letters">
+                    <button class="btn text-center btn-secondary ">a</button>
+                    <button class="btn text-center btn-secondary">b</button>
+                    <button class="btn text-center btn-secondary">c</button>
+                    <button class="btn text-center btn-secondary">d</button>
+                    <button class="btn text-center btn-secondary">e</button>
+                    <button class="btn text-center btn-secondary">f</button>
+                    <button class="btn text-center btn-secondary">g</button>
+                    <button class="btn text-center btn-secondary">h</button>
+                    <button class="btn text-center btn-secondary">i</button>
+                    <button class="btn text-center btn-secondary">j</button>
+                    <button class="btn text-center btn-secondary">k</button>
+                    <button class="btn text-center btn-secondary">l</button>
+                    <button class="btn text-center btn-secondary">m</button>
+                    <button class="btn text-center btn-secondary">n</button>
+                    <button class="btn text-center btn-secondary">ñ</button>
+                    <button class="btn text-center btn-secondary">o</button>
+                    <button class="btn text-center btn-secondary">p</button>
+                    <button class="btn text-center btn-secondary">q</button>
+                    <button class="btn text-center btn-secondary">r</button>
+                    <button class="btn text-center btn-secondary">s</button>
+                    <button class="btn text-center btn-secondary">t</button>
+                    <button class="btn text-center btn-secondary">u</button>
+                    <button class="btn text-center btn-secondary">v</button>
+                    <button class="btn text-center btn-secondary">w</button>
+                    <button class="btn text-center btn-secondary">x</button>
+                    <button class="btn text-center btn-secondary">y</button>
+                    <button class="btn text-center btn-secondary">z</button>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-primary mx-2 my-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Prueba Modal Confeti
+            </button>
+        </div>
+    
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true" z-index="100"> 
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5 text-success" id="staticBackdropLabel">GANASTE!!</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <button id="test" class="btn btn-dark btn-lg">Prueba</button>
+    
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
+
     <footer id="footer">
 
     </footer>
@@ -89,5 +117,7 @@
     crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="/assets/js/hangman.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+<script src="./assets/js/main.js"></script>
 
 </html>
