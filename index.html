@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="assets/css/custom.css">
-    <link href="https://fonts.googleapis.com/css2?family=Carter+One&display=swap" rel="stylesheet" />
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Carter+One&display=swap" rel="stylesheet" /> -->
 
     <script src="/assets/js/helpers.js"></script>
     <title>Document</title>
@@ -49,6 +49,7 @@
             <div>
                 <p id="wordToGuess"></p>
                 <button id="play" class="btn btn-dark">Empezar</button>
+                <button id="clue" class="btn btn-warning">Pista</button>
                 <p id="result"></p>
                 <div id="letters">
                     <button class="btn text-center btn-secondary ">a</button>
@@ -81,27 +82,61 @@
                 </div>
             </div>
         </div>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#configModal">
+            Configurar Juego
+        </button>
         <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-primary mx-2 my-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Prueba Modal Confeti
-            </button>
+            <div class="card text-bg-info my-3 h-25 w-50" id="cardWordClue" hidden>
+                <div class="card-header text-center">
+                    <h2 class="text-light">¡PISTA!</h2>
+                </div>
+                <div class="card-body text-center">
+                    <h2 id="wordClueText" class="card-title"></h2>
+                </div>
+            </div>
         </div>
-    
+
         <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true" z-index="100"> 
-            <div class="modal-dialog">
+        <div class="modal fade" id="hangmanModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="hangmanModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5 text-success" id="staticBackdropLabel">GANASTE!!</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header justify-content-center">
+                        <h1 class="modal-title fs-5 text-success " id="hangmanModalLabel">GANASTE!!</h1>
                     </div>
                     <div class="modal-body">
-                        <button id="test" class="btn btn-dark btn-lg">Prueba</button>
-    
+
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            id="closeModal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade opacity-95 modal-lg" id="configModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="configModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <h1 class="modal-title fs-5 text-warning " id="configModalLabel">Configuracion</h1>
+                    </div>
+                    <div class="modal-body">
+                        <div id="formConfig">
+                            <div class="d-flex justify-content-around  gap-4" id="subheaderConfig">
+                                <p class="fw-bold">Palabra</p>
+                                <p class="fw-bold">Tematica</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-sm btn-success my-3 fw-bold" id="addWord">+</button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            id="closeConfigModal">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -112,12 +147,9 @@
 
     </footer>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="/assets/js/hangman.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+<script src="./assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="./assets/plugins/js-confetti/js/js-confetti.browser.js"></script>
 <script src="./assets/js/main.js"></script>
+<script src="./assets/js/hangman.js"></script>
 
 </html>

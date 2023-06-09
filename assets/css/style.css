@@ -1,53 +1,64 @@
-html{
+html {
     height: 100%;
 }
 
 body {
     height: 100%;
-    background: rgb(0,0,0);
-    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(193,196,246,1) 91%);
+    background: rgb(0, 0, 0);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(193, 196, 246, 1) 91%);
     background-size: cover;
     font-family: 'Carter One', Arial, Helvetica, sans-serif;
     min-height: 100vh;
 }
-main #hangmanContainer{
+
+main #hangmanContainer {
     width: 80%;
     margin: auto;
     padding: 20px;
     gap: 30px;
-    background: rgba(255,255,255,.7);
+    background: rgba(255, 255, 255, .7);
 }
-#hangmanImage{
+
+#hangmanImage {
     width: 200px;
 }
-#wordToGuess{
+
+#wordToGuess {
     height: 3em;
 }
-#wordToGuess span{
+
+#wordToGuess span {
     vertical-align: bottom;
     font-size: 2em;
     border-bottom: 2px solid black;
     width: 30px;
     text-align: center;
     margin-right: 6px;
-    display: inline-block; 
+    display: inline-block;
 }
-#letters{
+
+#letters {
     margin-top: 30px;
     display: flex;
     flex-wrap: wrap;
     gap: 9px;
 }
-#letters button{
+
+#letters button {
     width: 28px;
     padding: 6px 0;
 }
+
 .brand-img {
     width: 40px;
     height: 40px;
 }
+
 .bg-custom {
     background: rgb(255, 255, 255);
     background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 9, 65, 0.6671043417366946) 4%, rgba(0, 0, 0, 1) 100%);
 }
 
+.opacity-95 {
+    opacity: 95%;
+}
