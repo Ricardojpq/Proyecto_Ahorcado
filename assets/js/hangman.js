@@ -1,4 +1,5 @@
 let wordToGuess;
+let prize;
 let contFail = 0;
 let contSuccess = 0;
 let showConfetti = false;
@@ -6,51 +7,68 @@ let showConfetti = false;
 let words = [];
 
 const btnPlay = getById("play");
-const hangmanImage = getById("hangmanImage");
 const btnsLetters = document.querySelectorAll("#letters button");
 const pResult = getById("result");
-const closeModal = getById("closeModal");
+const closeModalWinner = getById("closeModalWinner");
+const closeModalDefeat = getById("closeModalDefeat");
 const formConfig = getById("formConfig");
 const addWordButton = getById("addWord");
 const configModal = getById("configModal");
 const btnClue = getById("clue");
 const cardClue = getById("cardWordClue");
 const wordClueText = getById("wordClueText");
+const messageLoser = getById("messageLoser");
+const messageWinner = getById("messageWinner");
+const messagefailures = getById("failures");
+const messagecontFailures = getById("contFailures");
+const btnConfigGame = getById("configGame");
+const btnCloseConfigModal = getById("closeConfigModal");
+const textErrorConfig = getById("textErrorConfig");
+
 const jsConfeti = new JSConfetti();
 
-var audioWinner = new Audio("assets/sound/tick.mp3");
-const hangmanModal = new bootstrap.Modal(getById("hangmanModal"));
+var audioWinner = new Audio("assets/sound/victory.mp3");
+var audioDefeat = new Audio("assets/sound/defeat.mp3");
+var audioSuccess = new Audio("assets/sound/success.mp3");
+var audioMiss = new Audio("assets/sound/miss.mp3");
+
+const hangmanModalWinner = new bootstrap.Modal(getById("hangmanModalWinner"));
+const hangmanModalDefeat = new bootstrap.Modal(getById("hangmanModalDefeat"));
 
 btnPlay.addEventListener("click", (e) => {
   e.preventDefault();
   playGame(e);
 });
 
-
-
-closeModal.addEventListener("click", (e) => {
+closeModalWinner.addEventListener("click", (e) => {
   e.preventDefault();
   showConfetti = false;
   audioWinner.pause();
   audioWinner.currentTime = 0;
 });
+closeModalDefeat.addEventListener("click", (e) => {
+  e.preventDefault();
+  audioDefeat.pause();
+  audioDefeat.currentTime = 0;
+});
 
 function playGame(event) {
-  hangmanImage.src = "assets/img/img0.png";
   btnPlay.disabled = true;
   btnClue.disabled = false;
+  btnConfigGame.disabled = true;
+  messagefailures.classList.remove("invisible");
   contFail = 0;
   contSuccess = 0;
 
   const pWordToGuess = getById("wordToGuess");
   pWordToGuess.innerHTML = "";
-  pResult.innerHTML = "";
 
   const contWords = words.length;
   const randomNumber = getRandomNumber(0, contWords);
 
   wordToGuess = words[randomNumber].word;
   wordClueText.textContent = words[randomNumber].wordClue;
+  prize = words[randomNumber].prize;
 
   const contLetters = wordToGuess.length;
   for (let i = 0; i < btnsLetters.length; i++) {
@@ -68,9 +86,9 @@ for (let i = 0; i < btnsLetters.length; i++) {
     clickBtnLetter(e);
   });
 
-  btnClue.addEventListener("click",(e)=>{
+  btnClue.addEventListener("click", (e) => {
     cardClue.hidden = false;
-  })
+  });
 }
 
 function clickBtnLetter(event) {
@@ -83,28 +101,41 @@ function clickBtnLetter(event) {
 
   let success = false;
 
+  audioWinner.pause();
+  audioDefeat.pause();
+  audioSuccess.pause();
+  audioMiss.pause();
+
+  audioWinner.currentTime = 0;
+  audioDefeat.currentTime = 0;
+  audioSuccess.currentTime = 0;
+  audioMiss.currentTime = 0;
+
   for (let i = 0; i < word.length; i++) {
     if (letter === word[i]) {
       spans[i].innerHTML = letter;
       contSuccess++;
       success = true;
+      audioSuccess.play();
     }
   }
 
   if (success === false) {
     contFail++;
-    const source = `assets/img/img${contFail}.png`;
-    hangmanImage.src = source;
+    messagecontFailures.innerHTML = `${contFail} `;
+    audioMiss.play();
   }
 
   if (contFail === 7) {
-    pResult.innerHTML = "Perdiste, la palabra era: " + wordToGuess;
+    audioDefeat.play();
+    hangmanModalDefeat.show();
+    messageLoser.innerHTML = "La palabra era: " + wordToGuess;
     gameOver();
   } else if (contSuccess === wordToGuess.length) {
-    pResult.innerHTML = "Ganaste!!";
+    messageWinner.innerHTML = prize;
     showConfetti = true;
     throwConfetti();
-    hangmanModal.show();
+    hangmanModalWinner.show();
     gameOver();
   }
 }
@@ -116,12 +147,17 @@ function gameOver() {
 
   btnPlay.disabled = false;
   btnClue.disabled = true;
+  btnConfigGame.disabled = false;
   cardClue.hidden = true;
+  messagefailures.classList.add("invisible");
+
+  audioSuccess.currentTime = 0;
+  audioMiss.currentTime = 0;
 }
 
 async function throwConfetti() {
+  audioWinner.play();
   while (showConfetti) {
-    audioWinner.play();
     await jsConfeti.addConfetti({
       confettiColors: ["#ff0a54", "#ff477e", "#ff7096", "#ff85a1", "#fbb1bd", "#f9bec7"],
       confettiNumber: 300,
@@ -136,34 +172,68 @@ function configHangman() {
   divInputWord.className = "input-group input-group-sm my-1";
   const divInputWordClue = document.createElement("div");
   divInputWordClue.className = "input-group input-group-sm my-1";
+  const divInputPrize = document.createElement("div");
+  divInputPrize.className = "input-group input-group-sm my-1";
   const wordInput = document.createElement("input");
   wordInput.className = "form-control ms-3 ";
-  const wordClue = document.createElement("input");
-  wordClue.className = "form-control ms-5";
+  const wordClueInput = document.createElement("input");
+  wordClueInput.className = "form-control ms-5";
+  const PrizeInput = document.createElement("input");
+  PrizeInput.className = "form-control ms-5";
   const deleteButton = document.createElement("button");
   deleteButton.className = "btn btn-sm btn-danger fw-bold text-center ms-2 my-1";
   deleteButton.textContent = "X";
 
   divInputWord.appendChild(wordInput);
-  divInputWordClue.appendChild(wordClue);
+  divInputWordClue.appendChild(wordClueInput);
+  divInputPrize.appendChild(PrizeInput);
 
   containerOptions.appendChild(divInputWord);
   containerOptions.appendChild(divInputWordClue);
+  containerOptions.appendChild(divInputPrize);
   containerOptions.appendChild(deleteButton);
 
   formConfig.appendChild(containerOptions);
 
   deleteButton.addEventListener("click", (e) => {
     formConfig.removeChild(e.target.parentNode);
+    textErrorConfig.hidden = true;
+    textErrorConfig.innerHTML = "";
   });
+
+  wordInput.addEventListener("focusout", (e) => {
+    e.preventDefault();
+    validateConfigurationInputs(wordInput);
+  });
+  wordClueInput.addEventListener("focusout", (e) => {
+    e.preventDefault();
+    validateConfigurationInputs(wordClueInput);
+  });
+  PrizeInput.addEventListener("focusout", (e) => {
+    e.preventDefault();
+    validateConfigurationInputs(PrizeInput);
+  });
+
+
+}
+function validateConfigurationInputs(controlInput) {
+  if (controlInput.value.trim() === "") {
+    textErrorConfig.hidden = false;
+    textErrorConfig.innerHTML = "Por favor rellene todos los campos.";
+  } else {
+    textErrorConfig.hidden = true;
+    textErrorConfig.innerHTML = "";
+  }
 }
 
 function CheckFormValidation() {
   if (words.length === 0) {
     btnPlay.disabled = true;
     btnClue.disabled = true;
-  }else{
+    return false;
+  } else {
     btnPlay.disabled = false;
+    return true;
   }
 }
 
@@ -172,12 +242,20 @@ configModal.addEventListener("hidden.bs.modal", (e) => {
   Array.from(formConfig.children).forEach((formChildren) => {
     if (formChildren.id == "subheaderConfig") return;
 
-    var newWord = {
-      word: formChildren.children[0].children[0].value.trim(),
-      wordClue: formChildren.children[1].children[0].value.trim(),
-    };
-    words.push(newWord);
-    CheckFormValidation();
+    let newWord = formChildren.children[0].children[0].value.trim();
+    let newWordClue = formChildren.children[1].children[0].value.trim();
+    let newPrize = formChildren.children[2].children[0].value.trim();
+
+    if (newWord !== "" && newWordClue !== "" && newPrize !== "") {
+      var newItem = {
+        word: newWord,
+        wordClue: newWordClue,
+        prize: newPrize,
+      };
+      words.push(newItem);
+      CheckFormValidation();
+    } else {
+    }
   });
 });
 

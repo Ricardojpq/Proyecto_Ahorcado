@@ -7,14 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="assets/css/custom.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/plugins/bootstrap-icons/bootstrap-icons.min.css">
+
     <!-- <link href="https://fonts.googleapis.com/css2?family=Carter+One&display=swap" rel="stylesheet" /> -->
 
     <script src="/assets/js/helpers.js"></script>
     <title>Document</title>
 </head>
 
-<body>
-    <nav class="custom-navbar navbar navbar-expand-lg navbar-light  ">
+<body id="home">
+    <nav class="custom-navbar navbar navbar-expand-lg navbar-dark  bg-dark-custom sticky-top">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -22,10 +25,10 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="d-flex justify-content-start">
-                <a class="navbar-brand m-auto" href="#">
-                    <img src="./assets/img/logo.svg" class="brand-img" alt="" aria-label="Casino">
-                    <span class="brand-txt">Casino</span>
+            <div class="d-flex justify-content-start ">
+                <a class="navbar-brand m-auto align-items-center d-flex" href="#">
+                    <img src="./assets/img/logo.png" class="brand-img rounded-circle" alt="logo" aria-label="Casino">
+                    <span class="brand-txt fs-2 ms-2">Casino</span>
                 </a>
             </div>
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
@@ -41,17 +44,23 @@
         </div>
     </nav>
     <header id="header">
-        <h1 class="text-center">Ahorcado</h1>
     </header>
-    <main id="main" class="container">
-        <div class=" d-flex rounded" id="hangmanContainer">
-            <img src="assets/img/img0.png" alt="ahorcado" id="hangmanImage">
-            <div>
-                <p id="wordToGuess"></p>
-                <button id="play" class="btn btn-dark">Empezar</button>
-                <button id="clue" class="btn btn-warning">Pista</button>
-                <p id="result"></p>
-                <div id="letters">
+    <main id="main">
+        <section class="hangman-section section-padding " id="hangman">
+            <h1 class="text-center text-white">Ahorcado</h1>
+            <div class="d-flex flex-column rounded " id="hangmanContainer">
+                <div class="d-flex justify-content-between">
+                    <p class="fs-4 fw-bold" id="failures">Errores: <span id="contFailures">0 </span>/ 7</p>
+                    <button class="btn btn-icon rounded-circle " id="configGame" data-bs-toggle="modal"
+                        data-bs-target="#configModal" type="button" title="Configurar Juego"><i
+                            class="bi bi-gear"></i></button>
+                </div>
+                <p id="wordToGuess" class="text-center"></p>
+                <div class="d-flex justify-content-center gap-4">
+                    <button id="play" class="btn btn-dark">Empezar</button>
+                    <button id="clue" class="btn btn-warning">Pista</button>
+                </div>
+                <div id="letters" class="d-flex justify-content-center">
                     <button class="btn text-center btn-secondary ">a</button>
                     <button class="btn text-center btn-secondary">b</button>
                     <button class="btn text-center btn-secondary">c</button>
@@ -80,58 +89,91 @@
                     <button class="btn text-center btn-secondary">y</button>
                     <button class="btn text-center btn-secondary">z</button>
                 </div>
-            </div>
-        </div>
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#configModal">
-            Configurar Juego
-        </button>
-        <div class="d-flex justify-content-center">
-            <div class="card text-bg-info my-3 h-25 w-50" id="cardWordClue" hidden>
-                <div class="card-header text-center">
-                    <h2 class="text-light">¡PISTA!</h2>
+            </div>
+            <!-- <div class="d-flex justify-content-center">
+                <div class="card text-bg-info my-3 h-25 w-50" id="cardWordClue">
+                    <div class="card-header text-center">
+                        <h2 class="text-light">¡PISTA!</h2>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2 id="wordClueText" class="card-title"></h2>
+                    </div>
                 </div>
-                <div class="card-body text-center">
-                    <h2 id="wordClueText" class="card-title"></h2>
+            </div> -->
+            <div class="d-flex justify-content-center">
+                <div class="card text-bg-info cardClue mt-3" id="cardWordClue">
+                    <div class="card-header text-center">
+                        <h2 class="text-white">
+                            ¡PISTA!
+                        </h2>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2 id="wordClueText" class="card-title text-white"></h2>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="hangmanModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="hangmanModalLabel" aria-hidden="true">
+        </section>
+        <!-- Modal Winner-->
+        <div class="modal modal-lg fade" id="hangmanModalWinner" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="hangmanModalWinnerLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header justify-content-center">
-                        <h1 class="modal-title fs-5 text-success " id="hangmanModalLabel">GANASTE!!</h1>
+                        <h1 class="modal-title fs-5 text-success  fw-bold" id="hangmanModalWinnerLabel">GANASTE!!</h1>
                     </div>
-                    <div class="modal-body">
-
+                    <div class="modal-body text-center">
+                        <h3>Felicidades! has ganado: </h3>
+                        <h3 id="messageWinner"></h3>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                            id="closeModal">Close</button>
+                            id="closeModalWinner">Cerrar</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade opacity-95 modal-lg" id="configModal" data-bs-backdrop="static" data-bs-keyboard="false"
+        <!-- Modal Loser-->
+
+        <div class="modal fade" id="hangmanModalDefeat" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="hangmanModalDefeatLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <h1 class="modal-title fs-5 text-danger" id="hangmanModalDefeatLabel">Perdiste!!</h1>
+                    </div>
+                    <div class="modal-body">
+                        <h2 id="messageLoser"></h2>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            id="closeModalDefeat">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade opacity-95 modal-xl" id="configModal" data-bs-backdrop="static" data-bs-keyboard="false"
             tabindex="-1" aria-labelledby="configModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header justify-content-center">
-                        <h1 class="modal-title fs-5 text-warning " id="configModalLabel">Configuracion</h1>
+                        <h1 class="modal-title fs-5  fw-bold" id="configModalLabel">Configuraci&oacute;n</h1>
                     </div>
                     <div class="modal-body">
                         <div id="formConfig">
                             <div class="d-flex justify-content-around  gap-4" id="subheaderConfig">
                                 <p class="fw-bold">Palabra</p>
-                                <p class="fw-bold">Tematica</p>
+                                <p class="fw-bold">Tem&aacute;tica</p>
+                                <p class="fw-bold">Premio</p>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-sm btn-success my-3 fw-bold" id="addWord">+</button>
+                        </div>
+                        <div class="d-flex justify-content-start">
+                            <p class="fs-4 text-center text-danger" id="textErrorConfig" hidden>Por favor rellene todos los campos.</p>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -143,8 +185,21 @@
         </div>
     </main>
 
-    <footer id="footer">
-
+    <footer id="footer" class="bg-dark-custom py-1 d-flex flex-lg-column">
+        <div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
+            <div class=" order-2 order-md-1">
+                <span class="text-muted-custom  fw-bold me-1">2023©</span>
+                <a href="#" target="_blank" class="text-gray-800 text-secondary">RJ Developer</a>
+            </div>
+            <ul class="menu fw-bold order-1">
+                <li class="menu-item">
+                    <a href="#" target="_blank" class="menu-link  text-secondary px-2">Acerca de</a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" target="_blank" class="menu-link  text-secondary px-2">Soporte</a>
+                </li>
+            </ul>
+        </div>
     </footer>
 </body>
 <script src="./assets/plugins/bootstrap/js/bootstrap.min.js"></script>
