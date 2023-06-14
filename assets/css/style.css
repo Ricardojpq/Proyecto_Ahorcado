@@ -50,12 +50,15 @@ footer {
     display: flex;
     flex-wrap: wrap;
     gap: 9px;
+    width: 500px;
+    justify-content: center;
 }
 
 #letters button {
     width: 38px;
     padding: 16px 0;
 }
+
 
 
 .brand-img {
@@ -93,8 +96,8 @@ footer {
 }
 
 .hangman-section {
-    background-image: url('../img/nainoa-shizuru-unsplash-blur.jpg');
-    background-color: #242424;
+    /* background-image: url('../img/nainoa-shizuru-unsplash-blur.jpg'); */
+    background-color: #282828;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -180,7 +183,15 @@ footer a:hover {
     color: #EE5007;
 }
 
-#failures:hover{
-    color: #EE5007;
+#clue:hover{
+ background-color: #ffc107;
+ border-color: #ffc107;
 }
 
+#configGame{
+    float: right;
+}
+
+.test{
+    display: inline-flex;
+}

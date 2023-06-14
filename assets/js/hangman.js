@@ -19,11 +19,10 @@ const cardClue = getById("cardWordClue");
 const wordClueText = getById("wordClueText");
 const messageLoser = getById("messageLoser");
 const messageWinner = getById("messageWinner");
-const messagefailures = getById("failures");
-const messagecontFailures = getById("contFailures");
 const btnConfigGame = getById("configGame");
 const btnCloseConfigModal = getById("closeConfigModal");
 const textErrorConfig = getById("textErrorConfig");
+const divImageError = getById("divImageError");
 
 const jsConfeti = new JSConfetti();
 
@@ -34,6 +33,8 @@ var audioMiss = new Audio("assets/sound/miss.mp3");
 
 const hangmanModalWinner = new bootstrap.Modal(getById("hangmanModalWinner"));
 const hangmanModalDefeat = new bootstrap.Modal(getById("hangmanModalDefeat"));
+
+let divError;
 
 btnPlay.addEventListener("click", (e) => {
   e.preventDefault();
@@ -56,9 +57,13 @@ function playGame(event) {
   btnPlay.disabled = true;
   btnClue.disabled = false;
   btnConfigGame.disabled = true;
-  messagefailures.classList.remove("invisible");
+
   contFail = 0;
   contSuccess = 0;
+
+  divError = document.createElement("div");
+  divError.classList.add("d-inline-block");
+  divImageError.appendChild(divError);
 
   const pWordToGuess = getById("wordToGuess");
   pWordToGuess.innerHTML = "";
@@ -101,6 +106,12 @@ function clickBtnLetter(event) {
 
   let success = false;
 
+  let imgError = document.createElement("img");
+  imgError.src = "assets/img/X.svg";
+  imgError.width = 30;
+  imgError.height = 30;
+
+  divError.remove;
   audioWinner.pause();
   audioDefeat.pause();
   audioSuccess.pause();
@@ -122,7 +133,7 @@ function clickBtnLetter(event) {
 
   if (success === false) {
     contFail++;
-    messagecontFailures.innerHTML = `${contFail} `;
+    divError.appendChild(imgError);
     audioMiss.play();
   }
 
@@ -130,12 +141,14 @@ function clickBtnLetter(event) {
     audioDefeat.play();
     hangmanModalDefeat.show();
     messageLoser.innerHTML = "La palabra era: " + wordToGuess;
+    divImageError.removeChild(divError);
     gameOver();
   } else if (contSuccess === wordToGuess.length) {
     messageWinner.innerHTML = prize;
     showConfetti = true;
     throwConfetti();
     hangmanModalWinner.show();
+    divImageError.removeChild(divError);
     gameOver();
   }
 }
@@ -149,7 +162,6 @@ function gameOver() {
   btnClue.disabled = true;
   btnConfigGame.disabled = false;
   cardClue.hidden = true;
-  messagefailures.classList.add("invisible");
 
   audioSuccess.currentTime = 0;
   audioMiss.currentTime = 0;
@@ -213,8 +225,6 @@ function configHangman() {
     e.preventDefault();
     validateConfigurationInputs(PrizeInput);
   });
-
-
 }
 function validateConfigurationInputs(controlInput) {
   if (controlInput.value.trim() === "") {

@@ -46,47 +46,49 @@
         <section class="hangman-section section-padding " id="hangman">
             <h1 class="text-center text-white">Ahorcado</h1>
             <div class="d-flex flex-column rounded " id="hangmanContainer">
-                <div class="d-flex justify-content-between">
-                    <p class="fs-4 fw-bold" id="failures">Errores: <span id="contFailures">0 </span>/ 7</p>
-                    <button class="btn btn-icon rounded-circle " id="configGame" data-bs-toggle="modal"
-                        data-bs-target="#configModal" type="button" title="Configurar Juego"><i
-                            class="bi bi-gear"></i></button>
-                </div>
+                    <div class="mb-5" id="divImageError">
+                        <div class="float-end">
+                            <button class="btn btn-icon rounded-circle " id="configGame" data-bs-toggle="modal"
+                                data-bs-target="#configModal" type="button" title="Configurar Juego"><i
+                                    class="bi bi-gear"></i></button>
+                        </div>
+                    </div>
                 <p id="wordToGuess" class="text-center"></p>
                 <div class="d-flex justify-content-center gap-4">
                     <button id="play" class="btn btn-dark">Empezar</button>
-                    <button id="clue" class="btn btn-warning">Pista</button>
+                    <button id="clue" class="btn btn-secondary">Pista</button>
                 </div>
-                <div id="letters" class="d-flex justify-content-center">
-                    <button class="btn text-center btn-secondary ">a</button>
-                    <button class="btn text-center btn-secondary">b</button>
-                    <button class="btn text-center btn-secondary">c</button>
-                    <button class="btn text-center btn-secondary">d</button>
-                    <button class="btn text-center btn-secondary">e</button>
-                    <button class="btn text-center btn-secondary">f</button>
-                    <button class="btn text-center btn-secondary">g</button>
-                    <button class="btn text-center btn-secondary">h</button>
-                    <button class="btn text-center btn-secondary">i</button>
-                    <button class="btn text-center btn-secondary">j</button>
-                    <button class="btn text-center btn-secondary">k</button>
-                    <button class="btn text-center btn-secondary">l</button>
-                    <button class="btn text-center btn-secondary">m</button>
-                    <button class="btn text-center btn-secondary">n</button>
-                    <button class="btn text-center btn-secondary">ñ</button>
-                    <button class="btn text-center btn-secondary">o</button>
-                    <button class="btn text-center btn-secondary">p</button>
-                    <button class="btn text-center btn-secondary">q</button>
-                    <button class="btn text-center btn-secondary">r</button>
-                    <button class="btn text-center btn-secondary">s</button>
-                    <button class="btn text-center btn-secondary">t</button>
-                    <button class="btn text-center btn-secondary">u</button>
-                    <button class="btn text-center btn-secondary">v</button>
-                    <button class="btn text-center btn-secondary">w</button>
-                    <button class="btn text-center btn-secondary">x</button>
-                    <button class="btn text-center btn-secondary">y</button>
-                    <button class="btn text-center btn-secondary">z</button>
+                <div class=" d-flex justify-content-center">
+                    <div id="letters">
+                        <button class="btn text-center btn-secondary ">a</button>
+                        <button class="btn text-center btn-secondary">b</button>
+                        <button class="btn text-center btn-secondary">c</button>
+                        <button class="btn text-center btn-secondary">d</button>
+                        <button class="btn text-center btn-secondary">e</button>
+                        <button class="btn text-center btn-secondary">f</button>
+                        <button class="btn text-center btn-secondary">g</button>
+                        <button class="btn text-center btn-secondary">h</button>
+                        <button class="btn text-center btn-secondary">i</button>
+                        <button class="btn text-center btn-secondary">j</button>
+                        <button class="btn text-center btn-secondary">k</button>
+                        <button class="btn text-center btn-secondary">l</button>
+                        <button class="btn text-center btn-secondary">m</button>
+                        <button class="btn text-center btn-secondary">n</button>
+                        <button class="btn text-center btn-secondary">ñ</button>
+                        <button class="btn text-center btn-secondary">o</button>
+                        <button class="btn text-center btn-secondary">p</button>
+                        <button class="btn text-center btn-secondary">q</button>
+                        <button class="btn text-center btn-secondary">r</button>
+                        <button class="btn text-center btn-secondary">s</button>
+                        <button class="btn text-center btn-secondary">t</button>
+                        <button class="btn text-center btn-secondary">u</button>
+                        <button class="btn text-center btn-secondary">v</button>
+                        <button class="btn text-center btn-secondary">w</button>
+                        <button class="btn text-center btn-secondary">x</button>
+                        <button class="btn text-center btn-secondary">y</button>
+                        <button class="btn text-center btn-secondary">z</button>
+                    </div>
                 </div>
-
             </div>
             <!-- <div class="d-flex justify-content-center">
                 <div class="card text-bg-info my-3 h-25 w-50" id="cardWordClue">
@@ -170,7 +172,8 @@
                             <button class="btn btn-sm btn-success my-3 fw-bold" id="addWord">+</button>
                         </div>
                         <div class="d-flex justify-content-start">
-                            <p class="fs-4 text-center text-danger" id="textErrorConfig" hidden>Por favor rellene todos los campos.</p>
+                            <p class="fs-4 text-center text-danger" id="textErrorConfig" hidden>Por favor rellene todos
+                                los campos.</p>
                         </div>
                     </div>
                     <div class="modal-footer">
