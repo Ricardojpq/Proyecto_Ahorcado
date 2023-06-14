@@ -171,7 +171,6 @@ async function throwConfetti() {
   audioWinner.play();
   while (showConfetti) {
     await jsConfeti.addConfetti({
-      confettiColors: ["#ff0a54", "#ff477e", "#ff7096", "#ff85a1", "#fbb1bd", "#f9bec7"],
       confettiNumber: 300,
     });
   }
