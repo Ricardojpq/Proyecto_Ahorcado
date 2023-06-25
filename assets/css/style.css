@@ -41,7 +41,7 @@ footer {
     border-bottom: 2px solid black;
     width: 30px;
     text-align: center;
-    margin-right: 6px;
+    margin-right: 12px;
     display: inline-block;
 }
 
@@ -49,11 +49,13 @@ footer {
     margin-top: 30px;
     display: flex;
     flex-wrap: wrap;
-    gap: 9px;
+    gap: 15px;
     width: 500px;
     justify-content: center;
 }
-
+#hangmanModalWinner{
+    margin-top: 3.5rem !important;
+}
 #letters button {
     width: 38px;
     padding: 16px 0;
@@ -190,8 +192,4 @@ footer a:hover {
 
 #configGame{
     float: right;
-}
-
-.test{
-    display: inline-flex;
 }

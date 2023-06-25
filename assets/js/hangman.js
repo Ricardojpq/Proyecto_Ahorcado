@@ -75,13 +75,27 @@ function playGame(event) {
   wordClueText.textContent = words[randomNumber].wordClue;
   prize = words[randomNumber].prize;
 
-  const contLetters = wordToGuess.length;
   for (let i = 0; i < btnsLetters.length; i++) {
     btnsLetters[i].disabled = false;
   }
+  var contLetters = wordToGuess.length;
+  console.log(contLetters);
+  if(contLetters%2 !== 0){
+    contLetters++;
+  }
+  console.log(contLetters);
 
-  for (let i = 0; i < contLetters; i++) {
+  for (let i = 1; i <= contLetters; i++) {
     const span = document.createElement("span");
+  span.innerHTML = i;
+    if(i === contLetters/2){
+      span.classList.add("me-5")
+      console.log(i);
+    }
+    // if(i === contLetters){
+    //   span.classList.add("invisible");
+
+    // }
     pWordToGuess.appendChild(span);
   }
 }
