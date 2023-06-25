@@ -80,22 +80,19 @@ function playGame(event) {
   }
   var contLetters = wordToGuess.length;
   console.log(contLetters);
-  if(contLetters%2 !== 0){
-    contLetters++;
-  }
+  // if(contLetters%2 !== 0){
+  //   contLetters++;
+  // }
   console.log(contLetters);
 
   for (let i = 1; i <= contLetters; i++) {
     const span = document.createElement("span");
-  span.innerHTML = i;
-    if(i === contLetters/2){
+    if(i === Math.round(contLetters/2)){
       span.classList.add("me-5")
-      console.log(i);
     }
-    // if(i === contLetters){
-    //   span.classList.add("invisible");
-
-    // }
+    if(i === Math.round(contLetters/2)+1){
+      span.classList.add("ms-5")
+    }
     pWordToGuess.appendChild(span);
   }
 }
