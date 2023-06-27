@@ -46,14 +46,15 @@
         <section class="hangman-section section-padding " id="hangman">
             <h1 class="text-center text-white">Adivina y Gana</h1>
             <div class="d-flex flex-column rounded " id="hangmanContainer">
-                <div class="mb-5" id="divImageError">
-                    <div class="float-end">
-                        <button class="btn btn-icon rounded-circle " id="configGame" data-bs-toggle="modal"
-                            data-bs-target="#configModal" type="button" title="Configurar Juego"><i
-                                class="bi bi-gear"></i></button>
-                    </div>
+                <div class="float-end">
+                    <button class="btn btn-icon rounded-circle " id="configGame" data-bs-toggle="modal"
+                        data-bs-target="#configModal" type="button" title="Configurar Juego"><i
+                            class="bi bi-gear"></i></button>
                 </div>
-                <p id="wordToGuess" class="text-center ms-3"></p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <p id="wordToGuess" class="text-center ms-3 float-start"></p>
+                    <div class="mb-5 float-end" id="divImageError"></div>
+                </div>
                 <div class="d-flex justify-content-center gap-5">
                     <button id="play" class="btn btn-dark me-5">Empezar</button>
                     <button id="clue" class="btn btn-secondary ms-3">Pista</button>
@@ -61,43 +62,54 @@
                 <div class="d-flex justify-content-center">
                     <div id="letters">
 
-                            <button class="btn text-center btn-secondary">a</button>
-                            <button class="btn text-center btn-secondary">b</button>
-                            <button class="btn text-center btn-secondary">c</button>
-                            <button class="btn text-center btn-secondary me-5">d</button>
-                            <button class="btn text-center btn-secondary">e</button>
-                            <button class="btn text-center btn-secondary">f</button>
-                            <button class="btn text-center btn-secondary">g</button>
-                            <button class="btn text-center btn-secondary">h</button>
-                            <button class="btn text-center btn-secondary">i</button>
-                            <button class="btn text-center btn-secondary">j</button>
-                            <button class="btn text-center btn-secondary">k</button>
-                            <button class="btn text-center btn-secondary me-5">l</button>
-                            <button class="btn text-center btn-secondary">m</button>
-                            <button class="btn text-center btn-secondary">n</button>
+                        <button class="btn text-center btn-secondary">A</button>
+                        <button class="btn text-center btn-secondary">B</button>
+                        <button class="btn text-center btn-secondary">C</button>
+                        <button class="btn text-center btn-secondary me-5">D</button>
+                        <button class="btn text-center btn-secondary">E</button>
+                        <button class="btn text-center btn-secondary">F</button>
+                        <button class="btn text-center btn-secondary">G</button>
+                        <button class="btn text-center btn-secondary">H</button>
+                        <button class="btn text-center btn-secondary">I</button>
+                        <button class="btn text-center btn-secondary">J</button>
+                        <button class="btn text-center btn-secondary">K</button>
+                        <button class="btn text-center btn-secondary me-5">L</button>
+                        <button class="btn text-center btn-secondary">M</button>
+                        <button class="btn text-center btn-secondary">N</button>
 
-                            <button class="btn text-center btn-secondary">ñ</button>
-                            <button class="btn text-center btn-secondary">o</button>
-                            <button class="btn text-center btn-secondary">p</button>
-                            <button class="btn text-center btn-secondary">q</button>
-                            <button class="btn text-center btn-secondary">r</button>
-                            <button class="btn text-center btn-secondary me-5">s</button>
-                            <button class="btn text-center btn-secondary">t</button>
-                            <button class="btn text-center btn-secondary">u</button>
-                            <button class="btn text-center btn-secondary">v</button>
-                            <button class="btn text-center btn-secondary">w</button>
-                            <button class="btn text-center btn-secondary">x</button>
-                            <button class="btn text-center btn-secondary ">y</button>
-                            <span class="btn text-center btn-secondary invisible" disabled>none</span>
-                            <span class="btn text-center btn-secondary invisible" disabled>none</span>
-                            <span class="btn text-center btn-secondary invisible" disabled>none</span>
-                            <button class="btn text-center btn-secondary ">z</button>
-                            <span    class="btn text-center btn-secondary disabled"> </span>
-                            
-                        </div
+                        <button class="btn text-center btn-secondary">Ñ</button>
+                        <button class="btn text-center btn-secondary">O</button>
+                        <button class="btn text-center btn-secondary">P</button>
+                        <button class="btn text-center btn-secondary">Q</button>
+                        <button class="btn text-center btn-secondary">R</button>
+                        <button class="btn text-center btn-secondary me-5">S</button>
+                        <button class="btn text-center btn-secondary">T</button>
+                        <button class="btn text-center btn-secondary">U</button>
+                        <button class="btn text-center btn-secondary">V</button>
+                        <button class="btn text-center btn-secondary">W</button>
+                        <button class="btn text-center btn-secondary">X</button>
+                        <button class="btn text-center btn-secondary ">Y</button>
+                        <span class="btn text-center btn-secondary invisible" disabled>none</span>
+                        <span class="btn text-center btn-secondary invisible" disabled>none</span>
+                        <span class="btn text-center btn-secondary invisible" disabled>none</span>
+                        <button class="btn text-center btn-secondary ">Z</button>
+                        <span class="btn text-center btn-secondary disabled"> </span>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="d-flex flex-row justify-content-end w-75">
+            <div class="card text-bg-info cardClue mt-3" id="cardWordClue">
+                <div class="card-header text-center">
+                    <h2 class="text-white">
+                        ¡PISTA!
+                    </h2>
+                </div>
+                <div class="card-body text-center">
+                    <h2 id="wordClueText" class="card-title text-white"></h2>
+                </div>
+            </div>
+        </div>
             <!-- <div class="d-flex justify-content-center">
                 <div class="card text-bg-info my-3 h-25 w-50" id="cardWordClue">
                     <div class="card-header text-center">
@@ -108,18 +120,7 @@
                     </div>
                 </div>
             </div> -->
-            <div class="d-flex justify-content-center">
-                <div class="card text-bg-info cardClue mt-3" id="cardWordClue">
-                    <div class="card-header text-center">
-                        <h2 class="text-white">
-                            ¡PISTA!
-                        </h2>
-                    </div>
-                    <div class="card-body text-center">
-                        <h2 id="wordClueText" class="card-title text-white"></h2>
-                    </div>
-                </div>
-            </div>
+
         </section>
         <!-- Modal Winner-->
         <div class="modal modal-lg fade w-50 h-75 ms-1" id="hangmanModalWinner" data-bs-backdrop="static"
@@ -143,9 +144,9 @@
 
         <!-- Modal Loser-->
 
-        <div class="modal fade" id="hangmanModalDefeat" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        <div class="modal fade w-50 h-75 ms-1" id="hangmanModalDefeat" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="hangmanModalDefeatLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header justify-content-center">
                         <h1 class="modal-title fs-5 text-danger" id="hangmanModalDefeatLabel">Perdiste!!</h1>

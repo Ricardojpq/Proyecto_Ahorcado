@@ -16,7 +16,7 @@ main {
 }
 
 main #hangmanContainer {
-    width: 80%;
+    width: 95%;
     margin: auto;
     padding: 20px;
     gap: 30px;
@@ -32,17 +32,19 @@ footer {
 }
 
 #wordToGuess {
-    height: 3em;
+    height: 3.5em;
+    line-height: 3.5em;
 }
 
 #wordToGuess span {
     vertical-align: bottom;
-    font-size: 2em;
-    border-bottom: 2px solid black;
-    width: 30px;
+    font-size: 3em;
+    border-bottom: 4px solid black;
+    width: 42px;
     text-align: center;
     margin-right: 12px;
     display: inline-block;
+    line-height: 1em;
 }
 
 #letters {
@@ -100,7 +102,9 @@ footer {
 .navbar-nav .nav-link:hover {
     color: #EE5007;
 }
-
+.pista{
+    width: 85%;
+}
 .hangman-section {
     /* background-image: url('../img/nainoa-shizuru-unsplash-blur.jpg'); */
     background-color: #282828;

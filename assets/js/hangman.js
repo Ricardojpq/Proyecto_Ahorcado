@@ -71,35 +71,24 @@ function playGame(event) {
   const contWords = words.length;
   const randomNumber = getRandomNumber(0, contWords);
 
-  wordToGuess = words[randomNumber].word;
-  wordClueText.textContent = words[randomNumber].wordClue;
-  prize = words[randomNumber].prize;
+  wordToGuess = words[randomNumber].word.toUpperCase();
+  wordClueText.textContent = words[randomNumber].wordClue.toUpperCase();
+  prize = words[randomNumber].prize.toUpperCase();
 
   for (let i = 0; i < btnsLetters.length; i++) {
     btnsLetters[i].disabled = false;
   }
   var contLetters = wordToGuess.length;
-  console.log(contLetters);
-  // if(contLetters%2 !== 0){
-  //   contLetters++;
-  // }
-  console.log(contLetters);
 
   for (let i = 1; i <= contLetters; i++) {
     const span = document.createElement("span");
-    if(i === Math.round(contLetters/2)){
-      span.classList.add("me-5")
-    }
-    if(i === Math.round(contLetters/2)+1){
-      span.classList.add("ms-5")
-    }
     pWordToGuess.appendChild(span);
   }
 }
 
 for (let i = 0; i < btnsLetters.length; i++) {
   btnsLetters[i].addEventListener("click", (e) => {
-    clickBtnLetter(e);
+    clickBtnLetter(e,btnsLetters[i]);
   });
 
   btnClue.addEventListener("click", (e) => {
@@ -107,13 +96,13 @@ for (let i = 0; i < btnsLetters.length; i++) {
   });
 }
 
-function clickBtnLetter(event) {
+function clickBtnLetter(event,btnCliked) {
   const spans = document.querySelectorAll("#wordToGuess span");
   const btn = event.target;
   btn.disabled = true;
 
-  const letter = btn.innerHTML.toLowerCase();
-  const word = wordToGuess.toLowerCase();
+  const letter = btn.innerHTML.toUpperCase();
+  const word = wordToGuess.toUpperCase();
 
   let success = false;
 
@@ -139,13 +128,17 @@ function clickBtnLetter(event) {
       contSuccess++;
       success = true;
       audioSuccess.play();
+      btnCliked.classList.remove("btn-secondary");
+      btnCliked.classList.add("btn-success");
     }
   }
 
   if (success === false) {
     contFail++;
     divError.appendChild(imgError);
-    audioMiss.play();
+    contFail !== 7 ? audioMiss.play() : null;
+    btnCliked.classList.remove("btn-secondary");
+    btnCliked.classList.add("btn-danger");
   }
 
   if (contFail === 7) {
@@ -240,9 +233,11 @@ function validateConfigurationInputs(controlInput) {
   if (controlInput.value.trim() === "") {
     textErrorConfig.hidden = false;
     textErrorConfig.innerHTML = "Por favor rellene todos los campos.";
+    btnCloseConfigModal.disabled = true;
   } else {
     textErrorConfig.hidden = true;
     textErrorConfig.innerHTML = "";
+    btnCloseConfigModal.disabled = false;
   }
 }
 
@@ -273,10 +268,10 @@ configModal.addEventListener("hidden.bs.modal", (e) => {
         prize: newPrize,
       };
       words.push(newItem);
-      CheckFormValidation();
     } else {
     }
   });
+  CheckFormValidation();
 });
 
 addWordButton.addEventListener("click", (e) => {
