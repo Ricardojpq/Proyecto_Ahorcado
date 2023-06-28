@@ -88,7 +88,7 @@ function playGame(event) {
 
 for (let i = 0; i < btnsLetters.length; i++) {
   btnsLetters[i].addEventListener("click", (e) => {
-    clickBtnLetter(e,btnsLetters[i]);
+    clickBtnLetter(e, btnsLetters[i]);
   });
 
   btnClue.addEventListener("click", (e) => {
@@ -96,7 +96,7 @@ for (let i = 0; i < btnsLetters.length; i++) {
   });
 }
 
-function clickBtnLetter(event,btnCliked) {
+function clickBtnLetter(event, btnCliked) {
   const spans = document.querySelectorAll("#wordToGuess span");
   const btn = event.target;
   btn.disabled = true;
@@ -132,7 +132,6 @@ function clickBtnLetter(event,btnCliked) {
       btnCliked.classList.add("btn-success");
     }
   }
-
   if (success === false) {
     contFail++;
     divError.appendChild(imgError);
@@ -147,6 +146,7 @@ function clickBtnLetter(event,btnCliked) {
     messageLoser.innerHTML = "La palabra era: " + wordToGuess;
     divImageError.removeChild(divError);
     gameOver();
+    resetClassBtnLetterClicked();
   } else if (contSuccess === wordToGuess.length) {
     messageWinner.innerHTML = prize;
     showConfetti = true;
@@ -154,9 +154,22 @@ function clickBtnLetter(event,btnCliked) {
     hangmanModalWinner.show();
     divImageError.removeChild(divError);
     gameOver();
+    resetClassBtnLetterClicked();
   }
 }
 
+function resetClassBtnLetterClicked() {
+  btnsLetters.forEach((btn) => {
+    btn.classList.forEach((classCss) => {
+      if (classCss == "btn-danger") {
+        btn.classList.remove("btn-danger");
+      } else if (classCss == "btn-success") {
+        btn.classList.remove("btn-success");
+      }
+      btn.classList.add("btn-secondary");
+    });
+  });
+}
 function gameOver() {
   for (let i = 0; i < btnsLetters.length; i++) {
     btnsLetters[i].disabled = true;
