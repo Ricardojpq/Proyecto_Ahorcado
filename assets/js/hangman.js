@@ -108,8 +108,8 @@ function clickBtnLetter(event, btnCliked) {
 
   let imgError = document.createElement("img");
   imgError.src = "assets/img/X.svg";
-  imgError.width = 30;
-  imgError.height = 30;
+  imgError.width = 60;
+  imgError.height = 60;
 
   divError.remove;
   audioWinner.pause();
@@ -135,12 +135,12 @@ function clickBtnLetter(event, btnCliked) {
   if (success === false) {
     contFail++;
     divError.appendChild(imgError);
-    contFail !== 7 ? audioMiss.play() : null;
+    contFail !== 5 ? audioMiss.play() : null;
     btnCliked.classList.remove("btn-secondary");
     btnCliked.classList.add("btn-danger");
   }
 
-  if (contFail === 7) {
+  if (contFail === 5) {
     audioDefeat.play();
     hangmanModalDefeat.show();
     messageLoser.innerHTML = "La palabra era: " + wordToGuess;

@@ -7,12 +7,14 @@ body {
     flex-direction: column;
     background-color: white;
     font-family: 'Outfit', 'Carter One', Arial, Helvetica, sans-serif !important;
+    position: relative;
 }
 
 main {
     height: 100vh;
     background-size: cover;
     background-position: 50% 50%;
+    background-color: black;
 }
 
 main #hangmanContainer {
@@ -55,13 +57,16 @@ footer {
     width: 500px;
     justify-content: center;
 }
-#hangmanModalWinner{
+
+#hangmanModalWinner {
     margin-top: 3.5rem !important;
 }
+
 #letters button {
     width: 38px;
     padding: 16px 0;
 }
+
 #letters span {
     width: 38px;
     padding: 16px 0;
@@ -70,8 +75,8 @@ footer {
 
 
 .brand-img {
-    width: 40px;
-    height: 40px;
+    width: 80px;
+    height: 60px;
 }
 
 
@@ -102,27 +107,120 @@ footer {
 .navbar-nav .nav-link:hover {
     color: #EE5007;
 }
-.pista{
+
+.pista {
     width: 85%;
 }
+
+.height-100px {
+    height: 100px;
+}
+
+.title-game {
+    font-size: 100px !important;
+    letter-spacing: -.06em;
+    gap: 70px;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-weight: 800;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.title-game span {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: radial-gradient(circle, var(--start-color) var(--start-color-percentage), var(--end-color) var(--end-color-percentage));
+    position: relative;
+    z-index: 1;
+    padding: 0 12px 12px 0;
+}
+
+.title-game span::before {
+    content: var(--content);
+    position: absolute;
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: -10px;
+    background: white;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    animation: 4s var(--animation) infinite;
+    padding: 0 12px 12px 0;
+
+}
+
+@keyframes a {
+
+    0%,
+    16.667%,
+    to {
+        opacity: 0
+    }
+
+    25%,
+    91.667% {
+        opacity: 1
+    }
+}
+
+@keyframes a2 {
+
+    0%,
+    to {
+        opacity: 1
+    }
+
+    33.333%,
+    50% {
+        opacity: 0
+    }
+
+    25%,
+    58.333% {
+        opacity: 1
+    }
+}
+
+@keyframes a3 {
+
+    0%,
+    58.333%,
+    91.667%,
+    to {
+        opacity: 1
+    }
+
+    66.667%,
+    83.333% {
+        opacity: 0
+    }
+}
+
 .hangman-section {
-    /* background-image: url('../img/nainoa-shizuru-unsplash-blur.jpg'); */
+    background-image: url('../img/casinoTiuna.PNG');
     background-color: #282828;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    min-height: 100vh;
-    background-size: cover;
     background-position: 50% 50%;
     align-items: center;
+    padding: 0;
 }
 
 .section-padding {
     padding-top: 50px;
-    padding-bottom: 50px;
+    padding-bottom: 0;
 }
 
 .btn.btn-icon {
@@ -189,15 +287,15 @@ footer a:hover {
     max-width: 36rem;
 }
 
-#configModalLabel{
+#configModalLabel {
     color: #EE5007;
 }
 
-#clue:hover{
- background-color: #ffc107;
- border-color: #ffc107;
+#clue:hover {
+    background-color: #ffc107;
+    border-color: #ffc107;
 }
 
-#configGame{
+#configGame {
     float: right;
 }

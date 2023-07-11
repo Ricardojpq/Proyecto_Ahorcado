@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -43,19 +43,38 @@
     <header id="header">
     </header>
     <main id="main">
+        <h1 class="text-center text-white title-game d-flex justify-content-center">
+            <span style="--start-color:#be011f;
+            --start-color-percentage:57%;
+            --end-color:#6a0110;
+            --end-color-percentage:100%;
+             --content:'Adivina';
+             --animation:a">Adivina</span>
+            <span style="--start-color:#be011f;
+            --start-color-percentage:25%;
+            --end-color:#6a0110;
+            --end-color-percentage:100%;
+            --content:'y';
+            --animation:a2">y</span>
+            <span style="--start-color:#be011f;
+            --start-color-percentage:57%;
+            --end-color:#6a0110;
+            --end-color-percentage:100%;
+            --content:'Gana';
+            --animation:a3">Gana</span>
+        </h1>
         <section class="hangman-section section-padding " id="hangman">
-            <h1 class="text-center text-white">Adivina y Gana</h1>
             <div class="d-flex flex-column rounded " id="hangmanContainer">
                 <div class="float-end">
                     <button class="btn btn-icon rounded-circle " id="configGame" data-bs-toggle="modal"
                         data-bs-target="#configModal" type="button" title="Configurar Juego"><i
                             class="bi bi-gear"></i></button>
                 </div>
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center height-100px">
                     <p id="wordToGuess" class="text-center ms-3 float-start"></p>
-                    <div class="mb-5 float-end" id="divImageError"></div>
+                    <div class="mb-3 float-end" id="divImageError"></div>
                 </div>
-                <div class="d-flex justify-content-center gap-5">
+                <div class="d-flex justify-content-center gap-5 mb-5">
                     <button id="play" class="btn btn-dark me-5">Empezar</button>
                     <button id="clue" class="btn btn-secondary ms-3">Pista</button>
                 </div>
