@@ -2,12 +2,11 @@ html,
 body {
     margin: 0;
     display: flex;
+    flex-direction: column;
     min-height: 100vh;
     background-size: cover;
-    flex-direction: column;
     background-color: white;
     font-family: 'Outfit', 'Carter One', Arial, Helvetica, sans-serif !important;
-    position: relative;
 }
 
 main {
@@ -27,6 +26,7 @@ main #hangmanContainer {
 
 footer {
     background-color: black;
+    margin-top: auto;
 }
 
 #hangmanImage {
@@ -71,8 +71,6 @@ footer {
     width: 38px;
     padding: 16px 0;
 }
-
-
 
 .brand-img {
     width: 80px;
@@ -158,6 +156,15 @@ footer {
 
 }
 
+#wordClueText{
+    color: black;
+    font-size: 2rem;
+    font-weight: 600;
+}
+#hangmanModalClueWordLabel{
+    color: white;
+}
+
 @keyframes a {
 
     0%,
@@ -205,11 +212,26 @@ footer {
     }
 }
 
+#flashWin{
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #efb810;
+  --bs-btn-border-color: #efb810;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #dda90d;
+  --bs-btn-hover-border-color: #f2c22d;
+  --bs-btn-focus-shadow-rgb: 130, 138, 145;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #f2c22d;
+  --bs-btn-active-border-color: #f2c22d;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #efb810;
+  --bs-btn-disabled-border-color: #efb810;
+}
 .hangman-section {
     background-image: url('../img/casinoTiuna.png');
     background-color: #282828;
     background-repeat: no-repeat;
-    background-position: center center;
     background-size: cover;
     display: flex;
     flex-direction: column;
@@ -290,10 +312,13 @@ footer a:hover {
 #configModalLabel {
     color: #EE5007;
 }
-
+#clue{
+    transition: background-color 0.25s linear 0.15s;
+    border-color: transparent;
+}
 #clue:hover {
-    background-color: #ffc107;
-    border-color: #ffc107;
+    background-color: #be011f;
+    border-color: transparent;
 }
 
 #configGame {

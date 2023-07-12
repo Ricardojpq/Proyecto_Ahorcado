@@ -15,7 +15,6 @@ const formConfig = getById("formConfig");
 const addWordButton = getById("addWord");
 const configModal = getById("configModal");
 const btnClue = getById("clue");
-const cardClue = getById("cardWordClue");
 const wordClueText = getById("wordClueText");
 const messageLoser = getById("messageLoser");
 const messageWinner = getById("messageWinner");
@@ -23,6 +22,7 @@ const btnConfigGame = getById("configGame");
 const btnCloseConfigModal = getById("closeConfigModal");
 const textErrorConfig = getById("textErrorConfig");
 const divImageError = getById("divImageError");
+const btnFlashWin = getById("flashWin");
 
 const jsConfeti = new JSConfetti();
 
@@ -35,7 +35,6 @@ const hangmanModalWinner = new bootstrap.Modal(getById("hangmanModalWinner"));
 const hangmanModalDefeat = new bootstrap.Modal(getById("hangmanModalDefeat"));
 
 let divError;
-
 btnPlay.addEventListener("click", (e) => {
   e.preventDefault();
   playGame(e);
@@ -53,7 +52,127 @@ closeModalDefeat.addEventListener("click", (e) => {
   audioDefeat.currentTime = 0;
 });
 
+btnFlashWin.addEventListener("click", (e) => {
+  e.preventDefault();
+  flashWin();
+});
+
+function allAlphabet(e) {
+  switch (e.key.toLocaleLowerCase()) {
+    case "a":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "b":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "c":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "d":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "e":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "f":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "g":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;  
+    case "h":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "i":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "j":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "k":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "l":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "m":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "n":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "ñ":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "o":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "p":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "q":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "r":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "s":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "t":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "u":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "v":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "w":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "x":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "y":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+    case "z":
+      var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
+      btn.click();
+      break;
+  }
+}
+
 function playGame(event) {
+  document.addEventListener("keydown", allAlphabet);
+
   btnPlay.disabled = true;
   btnClue.disabled = false;
   btnConfigGame.disabled = true;
@@ -78,22 +197,43 @@ function playGame(event) {
   for (let i = 0; i < btnsLetters.length; i++) {
     btnsLetters[i].disabled = false;
   }
+  btnFlashWin.disabled = false;
+
   var contLetters = wordToGuess.length;
 
   for (let i = 1; i <= contLetters; i++) {
     const span = document.createElement("span");
+    span.classList.add("mb-4")
     pWordToGuess.appendChild(span);
   }
 }
 
 for (let i = 0; i < btnsLetters.length; i++) {
-  btnsLetters[i].addEventListener("click", (e) => {
-    clickBtnLetter(e, btnsLetters[i]);
-  });
+  if (btnsLetters[i].id !== "flashWin") {
+    btnsLetters[i].addEventListener("click", (e) => {
+      clickBtnLetter(e, btnsLetters[i]);
+    });
+  }
+}
 
-  btnClue.addEventListener("click", (e) => {
-    cardClue.hidden = false;
-  });
+function flashWin() {
+  const spans = document.querySelectorAll("#wordToGuess span");
+  const word = wordToGuess.toUpperCase();
+  let seconds = 700;
+  for (let i = 0; i < word.length; i++) {
+    setTimeout(function () {
+      spans[i].innerHTML = word[i];
+    }, seconds);
+    seconds += 700;
+  }
+  setTimeout(function () {
+    messageWinner.innerHTML = prize;
+    showConfetti = true;
+    throwConfetti();
+    hangmanModalWinner.show();
+    divImageError.removeChild(divError);
+    gameOver();
+  }, seconds + 300);
 }
 
 function clickBtnLetter(event, btnCliked) {
@@ -174,14 +314,14 @@ function gameOver() {
   for (let i = 0; i < btnsLetters.length; i++) {
     btnsLetters[i].disabled = true;
   }
-
+  btnFlashWin.disabled = true;
   btnPlay.disabled = false;
   btnClue.disabled = true;
   btnConfigGame.disabled = false;
-  cardClue.hidden = true;
 
   audioSuccess.currentTime = 0;
   audioMiss.currentTime = 0;
+  document.removeEventListener("keydown", allAlphabet);
 }
 
 async function throwConfetti() {
