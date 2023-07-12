@@ -203,7 +203,6 @@ function playGame(event) {
 
   for (let i = 1; i <= contLetters; i++) {
     const span = document.createElement("span");
-    span.classList.add("mb-4")
     pWordToGuess.appendChild(span);
   }
 }
