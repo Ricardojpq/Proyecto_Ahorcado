@@ -44,12 +44,13 @@ footer {
 #wordToGuess span {
     vertical-align: bottom;
     font-size: 3em;
-    border-bottom: 4px solid black;
+    border-bottom: 4px solid lightgrey;
     width: 42px;
     text-align: center;
     margin-right: 12px;
     display: inline-block;
     line-height: 1em;
+    color: white;
 }
 
 #letters {
