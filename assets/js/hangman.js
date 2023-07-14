@@ -3,7 +3,9 @@ let prize;
 let contFail = 0;
 let contSuccess = 0;
 let showConfetti = false;
-
+let minutes,seconds = 0;
+let repeater;
+let secondsForEachLetter = 8;
 let words = [];
 
 const btnPlay = getById("play");
@@ -23,6 +25,7 @@ const btnCloseConfigModal = getById("closeConfigModal");
 const textErrorConfig = getById("textErrorConfig");
 const divImageError = getById("divImageError");
 const btnFlashWin = getById("flashWin");
+const clock = document.querySelector(".clock");
 
 const jsConfeti = new JSConfetti();
 
@@ -30,6 +33,8 @@ var audioWinner = new Audio("assets/sound/victory.mp3");
 var audioDefeat = new Audio("assets/sound/defeat.mp3");
 var audioSuccess = new Audio("assets/sound/success.mp3");
 var audioMiss = new Audio("assets/sound/miss.mp3");
+var audioTimerEven  = new Audio("assets/sound/soundTimer1.ogg");
+var audioTimerOdd = new Audio("assets/sound/soundTimer2.ogg");
 
 const hangmanModalWinner = new bootstrap.Modal(getById("hangmanModalWinner"));
 const hangmanModalDefeat = new bootstrap.Modal(getById("hangmanModalDefeat"));
@@ -170,6 +175,55 @@ function allAlphabet(e) {
   }
 }
 
+function startTimer(letterCount,secondsByLetter){
+  setTimerWithWord(letterCount,secondsByLetter);
+  setTimer();
+  countdown();
+ 
+}
+function setTimer(){
+  clock.innerHTML= `<p class="numberClock">${minutes > 9 ? minutes: ('0'+ minutes)}</p><span>min</span><p class="numberClock">${seconds > 9 ? seconds: ('0'+ seconds)}</p><span>sec</span>`;
+  console.log(minutes);
+  console.log(seconds);
+}
+
+function countdown(){
+  repeater = setInterval(runner,1000);
+}
+
+function runner(){
+  if(seconds > 0)
+  {
+    seconds--;
+  }else{
+    if(minutes > 0){
+      seconds = 59;
+      minutes--;
+    }else{
+      /*poner alarme del temporizador*/ 
+      lose(wordToGuess);
+    }
+  }
+  if(seconds !== 0 && seconds <= 10 && minutes === 0){
+    if(seconds%2 == 0){
+      audioTimerEven.play();
+    }else{
+      audioTimerOdd.play();
+    }
+  }
+  setTimer();
+}
+
+function stopTimer(){
+  clearInterval(repeater);
+}
+
+function setTimerWithWord(letterCount,secondsByLetter){
+  var totalTimeInMinutes = (letterCount * secondsByLetter)/60;
+  minutes = Math.trunc(totalTimeInMinutes);
+  seconds = Math.trunc((totalTimeInMinutes % 1) * 60);
+}
+
 function playGame(event) {
   document.addEventListener("keydown", allAlphabet);
 
@@ -205,6 +259,8 @@ function playGame(event) {
     const span = document.createElement("span");
     pWordToGuess.appendChild(span);
   }
+
+  startTimer(contLetters,secondsForEachLetter);
 }
 
 for (let i = 0; i < btnsLetters.length; i++) {
@@ -216,6 +272,7 @@ for (let i = 0; i < btnsLetters.length; i++) {
 }
 
 function flashWin() {
+  stopTimer();
   const spans = document.querySelectorAll("#wordToGuess span");
   const word = wordToGuess.toUpperCase();
   let seconds = 700;
@@ -226,12 +283,7 @@ function flashWin() {
     seconds += 700;
   }
   setTimeout(function () {
-    messageWinner.innerHTML = prize;
-    showConfetti = true;
-    throwConfetti();
-    hangmanModalWinner.show();
-    divImageError.removeChild(divError);
-    gameOver();
+   win(prize);
   }, seconds + 300);
 }
 
@@ -280,21 +332,26 @@ function clickBtnLetter(event, btnCliked) {
   }
 
   if (contFail === 5) {
-    audioDefeat.play();
-    hangmanModalDefeat.show();
-    messageLoser.innerHTML = "La palabra era: " + wordToGuess;
-    divImageError.removeChild(divError);
-    gameOver();
-    resetClassBtnLetterClicked();
+   lose(wordToGuess);
   } else if (contSuccess === wordToGuess.length) {
-    messageWinner.innerHTML = prize;
-    showConfetti = true;
-    throwConfetti();
-    hangmanModalWinner.show();
-    divImageError.removeChild(divError);
-    gameOver();
-    resetClassBtnLetterClicked();
+   win(prize);
   }
+}
+
+function win(prize){
+  messageWinner.innerHTML = prize;
+  showConfetti = true;
+  throwConfetti();
+  hangmanModalWinner.show();
+  divImageError.removeChild(divError);
+  gameOver();
+}
+function lose(wordToGuess){
+  audioDefeat.play();
+  hangmanModalDefeat.show();
+  messageLoser.innerHTML = "La palabra era: " + wordToGuess;
+  divImageError.removeChild(divError);
+  gameOver();
 }
 
 function resetClassBtnLetterClicked() {
@@ -321,6 +378,8 @@ function gameOver() {
   audioSuccess.currentTime = 0;
   audioMiss.currentTime = 0;
   document.removeEventListener("keydown", allAlphabet);
+  resetClassBtnLetterClicked();
+  stopTimer();
 }
 
 async function throwConfetti() {

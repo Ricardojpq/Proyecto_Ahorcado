@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 html,
 body {
     margin: 0;
@@ -21,7 +23,8 @@ main #hangmanContainer {
     margin: auto;
     padding: 20px;
     gap: 30px;
-    background: rgba(255, 255, 255, .85);
+    /* background: rgba(255, 255, 255, .85); */
+    background: rgba(43, 43, 43, 0.85);
 }
 
 footer {
@@ -156,12 +159,13 @@ footer {
 
 }
 
-#wordClueText{
+#wordClueText {
     color: black;
     font-size: 2rem;
     font-weight: 600;
 }
-#hangmanModalClueWordLabel{
+
+#hangmanModalClueWordLabel {
     color: white;
 }
 
@@ -212,22 +216,23 @@ footer {
     }
 }
 
-#flashWin{
-  --bs-btn-color: #fff;
-  --bs-btn-bg: #efb810;
-  --bs-btn-border-color: #efb810;
-  --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #dda90d;
-  --bs-btn-hover-border-color: #f2c22d;
-  --bs-btn-focus-shadow-rgb: 130, 138, 145;
-  --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #f2c22d;
-  --bs-btn-active-border-color: #f2c22d;
-  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: #efb810;
-  --bs-btn-disabled-border-color: #efb810;
+#flashWin {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #efb810;
+    --bs-btn-border-color: #efb810;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #dda90d;
+    --bs-btn-hover-border-color: #f2c22d;
+    --bs-btn-focus-shadow-rgb: 130, 138, 145;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #f2c22d;
+    --bs-btn-active-border-color: #f2c22d;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #efb810;
+    --bs-btn-disabled-border-color: #efb810;
 }
+
 .hangman-section {
     background-image: url('../img/casinoTiuna.png');
     background-color: #282828;
@@ -254,7 +259,7 @@ footer {
     height: 25px;
     box-shadow: none;
     border: 0;
-    color: rgba(111, 111, 111, 0.904)
+    color: rgba(255, 255, 255, 0.904)
 }
 
 .btn.btn-icon:hover {
@@ -290,18 +295,24 @@ footer {
     outline: 0 !important;
 }
 
-footer a {
-    color: white;
-    text-decoration: none;
-}
-
 .text-muted-custom {
     opacity: 1;
     color: rgba(126, 78, 54, 0.75)
 }
 
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+
 footer a:hover {
     color: #EE5007 !important;
+}
+
+
+#configModalLabel {
+    color: #EE5007;
 }
 
 .cardClue {
@@ -309,13 +320,11 @@ footer a:hover {
     max-width: 36rem;
 }
 
-#configModalLabel {
-    color: #EE5007;
-}
-#clue{
+#clue {
     transition: background-color 0.25s linear 0.15s;
     border-color: transparent;
 }
+
 #clue:hover {
     background-color: #be011f;
     border-color: transparent;
@@ -323,4 +332,60 @@ footer a:hover {
 
 #configGame {
     float: right;
+}
+
+.container-timer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}
+
+.clock {
+    font-size: 32px;
+    text-shadow: -1px 0px 15px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: baseline;
+}
+
+.numberClock {
+    display: inline-block;
+    width: 70px;
+    font-size: 64px;
+    font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    text-shadow: -1px, 0px, 15px, rgba(37, 27, 27, 0.25);
+    border: none;
+    color: lightslategrey;
+    background-color: transparent;
+    margin-right: 6px;
+}
+.gradient-Radial-Red {
+    background-color: #f3ec78;
+    background-image: linear-gradient(to right, #ece9e6, #ffffff);
+}
+.gradient-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+}
+
+.btn-dark-alternative{
+    --bs-btn-font-weight: 600;
+    --bs-btn-color: white !important; 
+    --bs-btn-bg: #181a1c !important;
+    --bs-btn-border-color: #181a1c !important;
+    --bs-btn-border-radius: .5rem;
+    --bs-btn-hover-color: white;
+    --bs-btn-hover-bg: #2d3033;
+    --bs-btn-hover-border-color: #2d3033;
+    --bs-btn-focus-shadow-rgb: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-active-color:white;
+    --bs-btn-active-bg: #383b3f;
+    --bs-btn-active-border-color: #383b3f;
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #2f363c;
+    --bs-btn-disabled-border-color: #212529;
 }
