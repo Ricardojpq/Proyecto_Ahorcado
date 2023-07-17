@@ -3,8 +3,9 @@ let prize;
 let contFail = 0;
 let contSuccess = 0;
 let showConfetti = false;
-let minutes,seconds = 0;
+let minutes,seconds,auxSound = 0;
 let repeater;
+let soundTimer;
 let secondsForEachLetter = 8;
 let words = [];
 
@@ -27,14 +28,13 @@ const divImageError = getById("divImageError");
 const btnFlashWin = getById("flashWin");
 const clock = document.querySelector(".clock");
 
-
 const jsConfeti = new JSConfetti();
 
 var audioWinner = new Audio("assets/sound/victory.mp3");
 var audioDefeat = new Audio("assets/sound/defeat.mp3");
 var audioSuccess = new Audio("assets/sound/success.mp3");
 var audioMiss = new Audio("assets/sound/miss.mp3");
-var audioTimerEven  = new Audio("assets/sound/soundTimer1.ogg");
+var audioTimerEven = new Audio("assets/sound/soundTimer1.ogg");
 var audioTimerOdd = new Audio("assets/sound/soundTimer2.ogg");
 
 const hangmanModalWinner = new bootstrap.Modal(getById("hangmanModalWinner"));
@@ -93,7 +93,7 @@ function allAlphabet(e) {
     case "g":
       var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
       btn.click();
-      break;  
+      break;
     case "h":
       var btn = Array.from(btnsLetters).find((btn) => btn.innerHTML.toLocaleLowerCase() == e.key.toLocaleLowerCase());
       btn.click();
@@ -177,53 +177,75 @@ function allAlphabet(e) {
   }
 }
 
-function startTimer(letterCount,secondsByLetter){
-  setTimerWithWord(letterCount,secondsByLetter);
+function startTimer(letterCount, secondsByLetter) {
+  setTimerWithWord(letterCount, secondsByLetter);
   setTimer();
   countdown();
- 
+  startSoundTimer(1000);
 }
-function setTimer(){
-  clock.innerHTML= `<p class="numberClock">${minutes > 9 ? minutes: ('0'+ minutes)}</p><span>min</span><p class="numberClock">${seconds > 9 ? seconds: ('0'+ seconds)}</p><span>sec</span>`;
-}
-
-function countdown(){
-  repeater = setInterval(runner,1000);
+function setTimer() {
+  clock.innerHTML = `<p class="numberClock">${
+    minutes > 9 ? minutes : "0" + minutes
+  }</p><span>min</span><p class="numberClock">${seconds > 9 ? seconds : "0" + seconds}</p><span>sec</span>`;
 }
 
-function runner(){
-  if(seconds > 0)
-  {
+function countdown() {
+  repeater = setInterval(runner, 1000);
+}
+
+function runner() {
+  if (seconds > 0) {
     seconds--;
-  }else{
-    if(minutes > 0){
+  } else {
+    if (minutes > 0) {
       seconds = 59;
       minutes--;
-    }else{
-      /*poner alarme del temporizador*/ 
+    } else {
       lose(wordToGuess);
     }
   }
-  if(seconds !== 0 && seconds <= 10 && minutes === 0){
-    if(seconds%2 == 0){
-      audioTimerEven.play();
-    }else{
-      audioTimerOdd.play();
-    }
+  if(seconds !== 0 && seconds === 10 && minutes === 0){
+    stopSoundTimer();
+    setSoundTimerFast(333);
   }
   setTimer();
 }
 
-function stopTimer(){
+function stopTimer() {
   clearInterval(repeater);
 }
 
-function setTimerWithWord(letterCount,secondsByLetter){
-  var totalTimeInMinutes = (letterCount * secondsByLetter)/60;
+function setTimerWithWord(letterCount, secondsByLetter) {
+  var totalTimeInMinutes = (letterCount * secondsByLetter) / 60;
   minutes = Math.trunc(totalTimeInMinutes);
   seconds = Math.trunc((totalTimeInMinutes % 1) * 60);
 }
 
+function startSoundTimer(milliseconds) {
+  auxSound = 0;
+  soundTimer = setInterval(() => {
+    if (seconds % 2 == 0) {
+      audioTimerEven.play();
+    } else {
+      audioTimerOdd.play();
+    }
+  }, milliseconds);
+}
+
+function setSoundTimerFast(milliseconds) {
+  soundTimer = setInterval(() => {
+    if (auxSound % 2 == 0) {
+      audioTimerEven.play();
+    } else {
+      audioTimerOdd.play();
+    }
+    auxSound++;
+  }, milliseconds);
+}
+
+function stopSoundTimer() {
+  clearInterval(soundTimer);
+}
 function playGame(event) {
   document.addEventListener("keydown", allAlphabet);
 
@@ -260,7 +282,7 @@ function playGame(event) {
     pWordToGuess.appendChild(span);
   }
 
-  startTimer(contLetters,secondsForEachLetter);
+  startTimer(contLetters, secondsForEachLetter);
 }
 
 for (let i = 0; i < btnsLetters.length; i++) {
@@ -273,6 +295,7 @@ for (let i = 0; i < btnsLetters.length; i++) {
 
 function flashWin() {
   stopTimer();
+  stopSoundTimer();
   const spans = document.querySelectorAll("#wordToGuess span");
   const word = wordToGuess;
   let seconds = 700;
@@ -283,7 +306,7 @@ function flashWin() {
     seconds += 700;
   }
   setTimeout(function () {
-   win(prize);
+    win(prize);
   }, seconds + 300);
 }
 
@@ -332,29 +355,32 @@ function clickBtnLetter(event, btnCliked) {
   }
 
   if (contFail === 5) {
-   lose(wordToGuess);
+    lose(wordToGuess);
   } else if (contSuccess === wordToGuess.length) {
-   win(prize,wordToGuess);
+    win(prize, wordToGuess);
   }
 }
 
-function win(prize,wordToGuess){
+function win(prize, wordToGuess) {
   messageWinner.innerHTML = prize;
   showConfetti = true;
   throwConfetti();
   hangmanModalWinner.show();
   divImageError.removeChild(divError);
-  var index = words.map(item => item.word).indexOf(wordToGuess);
-  words.splice(index,1);
+  var index = words.map((item) => item.word).indexOf(wordToGuess);
+  words.splice(index, 1);
   gameOver();
   loadConfigHagman(words);
 }
-function lose(wordToGuess){
+function lose(wordToGuess) {
   audioDefeat.play();
   hangmanModalDefeat.show();
   messageLoser.innerHTML = "La palabra era: " + wordToGuess;
   divImageError.removeChild(divError);
+  var index = words.map((item) => item.word).indexOf(wordToGuess);
+  words.splice(index, 1);
   gameOver();
+  loadConfigHagman(words);
 }
 
 function resetClassBtnLetterClicked() {
@@ -383,6 +409,7 @@ function gameOver() {
   document.removeEventListener("keydown", allAlphabet);
   resetClassBtnLetterClicked();
   stopTimer();
+  stopSoundTimer();
 }
 
 async function throwConfetti() {
@@ -405,8 +432,8 @@ function configHangman(listWords) {
   divInputPrize.className = "input-group input-group-sm my-1";
   const wordInput = document.createElement("input");
   wordInput.className = "form-control ms-3 wordToGuess";
-  wordInput.value = listWords !== undefined ? listWords.word: "";
-  wordInput.name = "wordToGuess"
+  wordInput.value = listWords !== undefined ? listWords.word : "";
+  wordInput.name = "wordToGuess";
   const wordClueInput = document.createElement("input");
   wordClueInput.className = "form-control ms-5";
   wordClueInput.value = listWords !== undefined ? listWords.wordClue : "";
@@ -435,22 +462,26 @@ function configHangman(listWords) {
   });
 }
 
-function loadConfigHagman(listWords){
+function loadConfigHagman(listWords) {
   removeConfigHagman(listWords);
-  listWords.forEach(config => {
+  listWords.forEach((config) => {
     configHangman(config);
   });
 }
 
-function removeConfigHagman(listWords){
-  if(listWords !== undefined){
-    let inputsConfiguration = document.querySelectorAll("#formConfig div.d-flex.justify-content-around.align-items-center");
-    inputsConfiguration.forEach((item)=>{formConfig.removeChild(item)});
+function removeConfigHagman(listWords) {
+  if (listWords !== undefined) {
+    let inputsConfiguration = document.querySelectorAll(
+      "#formConfig div.d-flex.justify-content-around.align-items-center"
+    );
+    inputsConfiguration.forEach((item) => {
+      formConfig.removeChild(item);
+    });
   }
   CheckFormValidation();
 }
 
-function validateEmptyConfigInput(configInput){
+function validateEmptyConfigInput(configInput) {
   let hasNoErrors = true;
   if (configInput.value.trim() === "") {
     hasNoErrors = false;
@@ -458,18 +489,20 @@ function validateEmptyConfigInput(configInput){
   return hasNoErrors;
 }
 
-function validateRepeatedGuessWord(wordInputToGuess){
+function validateRepeatedGuessWord(wordInputToGuess) {
   let hasNoErrors = true;
-  if(validateEmptyConfigInput(wordInputToGuess)){
-    let allConfigInputsForTheWordToGuess = Array.from(document.querySelectorAll("#formConfig div.d-flex.justify-content-around.align-items-center input.wordToGuess"));
+  if (validateEmptyConfigInput(wordInputToGuess)) {
+    let allConfigInputsForTheWordToGuess = Array.from(
+      document.querySelectorAll("#formConfig div.d-flex.justify-content-around.align-items-center input.wordToGuess")
+    );
     let index = allConfigInputsForTheWordToGuess.indexOf(wordInputToGuess);
-    allConfigInputsForTheWordToGuess.splice(index,1);
-    allConfigInputsForTheWordToGuess.forEach(inputWord => {
-      if(inputWord.value.trim() === wordInputToGuess.value.trim()){
-        hasNoErrors = false;      
+    allConfigInputsForTheWordToGuess.splice(index, 1);
+    allConfigInputsForTheWordToGuess.forEach((inputWord) => {
+      if (inputWord.value.trim() === wordInputToGuess.value.trim()) {
+        hasNoErrors = false;
         return hasNoErrors;
       }
-    })
+    });
   }
   return hasNoErrors;
 }
@@ -511,34 +544,38 @@ addWordButton.addEventListener("click", (e) => {
   configHangman();
 });
 
-btnCloseConfigModal.addEventListener("click",(e)=>{
+btnCloseConfigModal.addEventListener("click", (e) => {
   e.preventDefault();
   let hasNoError = true;
-  let inputsConfig = Array.from(document.querySelectorAll("#formConfig div.d-flex.justify-content-around.align-items-center input"));
-  let configInputsForWordsToGuess = Array.from(document.querySelectorAll("#formConfig div.d-flex.justify-content-around.align-items-center input.wordToGuess"));
-  inputsConfig.forEach(inputConfig =>{
-    if(!validateEmptyConfigInput(inputConfig)){
+  let inputsConfig = Array.from(
+    document.querySelectorAll("#formConfig div.d-flex.justify-content-around.align-items-center input")
+  );
+  let configInputsForWordsToGuess = Array.from(
+    document.querySelectorAll("#formConfig div.d-flex.justify-content-around.align-items-center input.wordToGuess")
+  );
+  inputsConfig.forEach((inputConfig) => {
+    if (!validateEmptyConfigInput(inputConfig)) {
       textErrorConfig.hidden = false;
       textErrorConfig.innerHTML = "Por favor rellene todos los campos.";
       hasNoError = false;
       return;
     }
-  })
-  configInputsForWordsToGuess.forEach(wordToGuessInput =>{
-    if(!validateRepeatedGuessWord(wordToGuessInput)){
+  });
+  configInputsForWordsToGuess.forEach((wordToGuessInput) => {
+    if (!validateRepeatedGuessWord(wordToGuessInput)) {
       textErrorConfig.hidden = false;
       textErrorConfig.innerHTML = "Por favor no repitas las palabras";
       hasNoError = false;
       return;
     }
-  })
+  });
 
-  if(hasNoError){
+  if (hasNoError) {
     textErrorConfig.hidden = true;
     textErrorConfig.innerHTML = "";
     hangmanModalConfig.hide();
   }
-})
+});
 
 gameOver();
 CheckFormValidation();
