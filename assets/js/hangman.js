@@ -6,9 +6,9 @@ let showConfetti = false;
 let minutes,seconds,auxSound = 0;
 let repeater;
 let soundTimer;
-let secondsForEachLetter = 8;
 let words = [];
 
+const secondsForEachLetter = 8;
 const btnPlay = getById("play");
 const btnsLetters = document.querySelectorAll("#letters button");
 const pResult = getById("result");
@@ -17,6 +17,7 @@ const closeModalDefeat = getById("closeModalDefeat");
 const formConfig = getById("formConfig");
 const addWordButton = getById("addWord");
 const configModal = getById("configModal");
+const wordClueModal = getById("hangmanModalClueWord");
 const btnClue = getById("clue");
 const wordClueText = getById("wordClueText");
 const messageLoser = getById("messageLoser");
@@ -34,8 +35,8 @@ var audioWinner = new Audio("assets/sound/victory.mp3");
 var audioDefeat = new Audio("assets/sound/defeat.mp3");
 var audioSuccess = new Audio("assets/sound/success.mp3");
 var audioMiss = new Audio("assets/sound/miss.mp3");
-var audioTimerEven = new Audio("assets/sound/soundTimer1.ogg");
-var audioTimerOdd = new Audio("assets/sound/soundTimer2.ogg");
+var audioTimerEven = new Audio("assets/sound/soundTimer1.mp3");
+var audioTimerOdd = new Audio("assets/sound/soundTimer2.mp3");
 
 const hangmanModalWinner = new bootstrap.Modal(getById("hangmanModalWinner"));
 const hangmanModalDefeat = new bootstrap.Modal(getById("hangmanModalDefeat"));
@@ -177,9 +178,11 @@ function allAlphabet(e) {
   }
 }
 
-function startTimer(letterCount, secondsByLetter) {
+function showTimer(letterCount, secondsByLetter) {
   setTimerWithWord(letterCount, secondsByLetter);
   setTimer();
+}
+function startTimerCountdown(){
   countdown();
   startSoundTimer(1000);
 }
@@ -206,7 +209,7 @@ function runner() {
   }
   if(seconds !== 0 && seconds === 10 && minutes === 0){
     stopSoundTimer();
-    setSoundTimerFast(333);
+    setSoundTimerFast(300);
   }
   setTimer();
 }
@@ -234,17 +237,29 @@ function startSoundTimer(milliseconds) {
 
 function setSoundTimerFast(milliseconds) {
   soundTimer = setInterval(() => {
-    if (auxSound % 2 == 0) {
-      audioTimerEven.play();
-    } else {
-      audioTimerOdd.play();
+    stopAudioTimer();
+    if(seconds >= 1){
+      if (auxSound % 2 == 0) {
+        audioTimerEven.play();
+      } else {
+        audioTimerOdd.play();
+      }
+      auxSound++;
+    }else{
+      stopAudioTimer();
     }
-    auxSound++;
   }, milliseconds);
 }
 
 function stopSoundTimer() {
   clearInterval(soundTimer);
+}
+
+function stopAudioTimer(){
+  audioTimerEven.pause();
+  audioTimerEven.currentTime = 0;
+  audioTimerOdd.pause();
+  audioTimerOdd.currentTime = 0;
 }
 function playGame(event) {
   document.addEventListener("keydown", allAlphabet);
@@ -281,8 +296,7 @@ function playGame(event) {
     const span = document.createElement("span");
     pWordToGuess.appendChild(span);
   }
-
-  startTimer(contLetters, secondsForEachLetter);
+  showTimer(contLetters,secondsForEachLetter);
 }
 
 for (let i = 0; i < btnsLetters.length; i++) {
@@ -538,6 +552,10 @@ configModal.addEventListener("hidden.bs.modal", (e) => {
   });
   CheckFormValidation();
 });
+
+wordClueModal.addEventListener("hidden.bs.modal",(e)=>{
+  startTimerCountdown();
+})
 
 addWordButton.addEventListener("click", (e) => {
   e.preventDefault();
