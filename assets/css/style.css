@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Mukta:wght@400;500;600&family=Poppins:wght@400;500;600&family=Rubik:wght@400;500;600&display=swap');
 html,
 body {
     margin: 0;
@@ -8,7 +8,13 @@ body {
     min-height: 100vh;
     background-size: cover;
     background-color: white;
-    font-family: 'Outfit', 'Carter One', Arial, Helvetica, sans-serif !important;
+    font-family: 'Lora','Outfit', 'Carter One', Arial, Helvetica, sans-serif !important;
+    scrollbar-width: none;
+}
+
+html
+::-webkit-scrollbar {
+    display: none;
 }
 
 main {
@@ -248,12 +254,16 @@ footer {
 
 .section-padding {
     padding-top: 50px;
+    padding-right: 15px;
     padding-bottom: 0;
+    padding-left: 15px;
 }
-.hangman-section{
+
+.hangman-section {
     width: 100%;
     height: 100%;
 }
+
 .btn.btn-icon {
     display: inline-flex;
     align-items: center;
@@ -364,21 +374,23 @@ footer a:hover {
     background-color: transparent;
     margin-right: 6px;
 }
+
 .gradient-Radial-Red {
     background-color: #f3ec78;
     background-image: linear-gradient(to right, #ece9e6, #ffffff);
 }
+
 .gradient-text {
     -webkit-background-clip: text;
     background-clip: text;
     -moz-background-clip: text;
-    -webkit-text-fill-color: transparent; 
+    -webkit-text-fill-color: transparent;
     -moz-text-fill-color: transparent;
 }
 
-.btn-dark-alternative{
+.btn-dark-alternative {
     --bs-btn-font-weight: 600;
-    --bs-btn-color: white !important; 
+    --bs-btn-color: white !important;
     --bs-btn-bg: #181a1c !important;
     --bs-btn-border-color: #181a1c !important;
     --bs-btn-border-radius: .5rem;
@@ -386,7 +398,7 @@ footer a:hover {
     --bs-btn-hover-bg: #2d3033;
     --bs-btn-hover-border-color: #2d3033;
     --bs-btn-focus-shadow-rgb: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-active-color:white;
+    --bs-btn-active-color: white;
     --bs-btn-active-bg: #383b3f;
     --bs-btn-active-border-color: #383b3f;
     --bs-btn-disabled-color: #fff;

@@ -3,10 +3,13 @@ let prize;
 let contFail = 0;
 let contSuccess = 0;
 let showConfetti = false;
-let minutes,seconds,auxSound = 0;
+let minutes,
+  seconds,
+  auxSound = 0;
 let repeater;
 let soundTimer;
 let words = [];
+let pauseTimer = false;
 
 const secondsForEachLetter = 8;
 const btnPlay = getById("play");
@@ -64,7 +67,6 @@ btnFlashWin.addEventListener("click", (e) => {
   e.preventDefault();
   flashWin();
 });
-
 function allAlphabet(e) {
   switch (e.key.toLocaleLowerCase()) {
     case "a":
@@ -178,13 +180,33 @@ function allAlphabet(e) {
   }
 }
 
+function pauseAudio(e) {
+  console.log("Se Preciono El espacio");
+  switch (e.key.toLocaleLowerCase()) {
+    case "-":
+      if (pauseTimer) {
+        startTimerCountdown();
+      } else {
+        stopTimerCountdown();
+      }
+      break;
+  }
+}
+
 function showTimer(letterCount, secondsByLetter) {
   setTimerWithWord(letterCount, secondsByLetter);
   setTimer();
 }
-function startTimerCountdown(){
+function startTimerCountdown() {
   countdown();
   startSoundTimer(1000);
+  pauseTimer = false;
+}
+
+function stopTimerCountdown() {
+  stopTimer();
+  stopSoundTimer();
+  pauseTimer = true;
 }
 function setTimer() {
   clock.innerHTML = `<p class="numberClock">${
@@ -207,7 +229,7 @@ function runner() {
       lose(wordToGuess);
     }
   }
-  if(seconds !== 0 && seconds === 10 && minutes === 0){
+  if (seconds !== 0 && seconds === 10 && minutes === 0) {
     stopSoundTimer();
     setSoundTimerFast(300);
   }
@@ -226,26 +248,30 @@ function setTimerWithWord(letterCount, secondsByLetter) {
 
 function startSoundTimer(milliseconds) {
   auxSound = 0;
-  soundTimer = setInterval(() => {
-    if (seconds % 2 == 0) {
-      audioTimerEven.play();
-    } else {
-      audioTimerOdd.play();
-    }
-  }, milliseconds);
+  if (seconds >= 1 && seconds <= 10 && minutes === 0) {
+    setSoundTimerFast(300);
+  } else {
+    soundTimer = setInterval(() => {
+      if (seconds % 2 == 0) {
+        audioTimerEven.play();
+      } else {
+        audioTimerOdd.play();
+      }
+    }, milliseconds);
+  }
 }
 
 function setSoundTimerFast(milliseconds) {
   soundTimer = setInterval(() => {
     stopAudioTimer();
-    if(seconds >= 1){
+    if (seconds >= 1) {
       if (auxSound % 2 == 0) {
         audioTimerEven.play();
       } else {
         audioTimerOdd.play();
       }
       auxSound++;
-    }else{
+    } else {
       stopAudioTimer();
     }
   }, milliseconds);
@@ -255,7 +281,7 @@ function stopSoundTimer() {
   clearInterval(soundTimer);
 }
 
-function stopAudioTimer(){
+function stopAudioTimer() {
   audioTimerEven.pause();
   audioTimerEven.currentTime = 0;
   audioTimerOdd.pause();
@@ -296,7 +322,7 @@ function playGame(event) {
     const span = document.createElement("span");
     pWordToGuess.appendChild(span);
   }
-  showTimer(contLetters,secondsForEachLetter);
+  showTimer(contLetters, secondsForEachLetter);
 }
 
 for (let i = 0; i < btnsLetters.length; i++) {
@@ -308,20 +334,15 @@ for (let i = 0; i < btnsLetters.length; i++) {
 }
 
 function flashWin() {
-  stopTimer();
-  stopSoundTimer();
+  stopTimerCountdown();
   const spans = document.querySelectorAll("#wordToGuess span");
   const word = wordToGuess;
-  let seconds = 700;
   for (let i = 0; i < word.length; i++) {
-    setTimeout(function () {
-      spans[i].innerHTML = word[i];
-    }, seconds);
-    seconds += 700;
+    spans[i].innerHTML = word[i];
   }
   setTimeout(function () {
-    win(prize);
-  }, seconds + 300);
+    win(prize, word);
+  }, 300);
 }
 
 function clickBtnLetter(event, btnCliked) {
@@ -381,19 +402,21 @@ function win(prize, wordToGuess) {
   throwConfetti();
   hangmanModalWinner.show();
   divImageError.removeChild(divError);
-  var index = words.map((item) => item.word).indexOf(wordToGuess);
-  words.splice(index, 1);
   gameOver();
-  loadConfigHagman(words);
+  deleteWordOfTheConfig(wordToGuess);
 }
 function lose(wordToGuess) {
   audioDefeat.play();
   hangmanModalDefeat.show();
   messageLoser.innerHTML = "La palabra era: " + wordToGuess;
   divImageError.removeChild(divError);
+  gameOver();
+  deleteWordOfTheConfig(wordToGuess);
+}
+
+function deleteWordOfTheConfig(wordToGuess) {
   var index = words.map((item) => item.word).indexOf(wordToGuess);
   words.splice(index, 1);
-  gameOver();
   loadConfigHagman(words);
 }
 
@@ -421,9 +444,9 @@ function gameOver() {
   audioSuccess.currentTime = 0;
   audioMiss.currentTime = 0;
   document.removeEventListener("keydown", allAlphabet);
+  document.removeEventListener("keydown", pauseAudio);
   resetClassBtnLetterClicked();
-  stopTimer();
-  stopSoundTimer();
+  stopTimerCountdown();
 }
 
 async function throwConfetti() {
@@ -553,9 +576,11 @@ configModal.addEventListener("hidden.bs.modal", (e) => {
   CheckFormValidation();
 });
 
-wordClueModal.addEventListener("hidden.bs.modal",(e)=>{
+wordClueModal.addEventListener("hidden.bs.modal", (e) => {
   startTimerCountdown();
-})
+  btnClue.disabled = true;
+  document.addEventListener("keydown", pauseAudio);
+});
 
 addWordButton.addEventListener("click", (e) => {
   e.preventDefault();
