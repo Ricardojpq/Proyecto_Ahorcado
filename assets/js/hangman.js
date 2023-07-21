@@ -15,12 +15,12 @@ const secondsForEachLetter = 8;
 const btnPlay = getById("play");
 const btnsLetters = document.querySelectorAll("#letters button");
 const pResult = getById("result");
-const closeModalWinner = getById("closeModalWinner");
-const closeModalDefeat = getById("closeModalDefeat");
 const formConfig = getById("formConfig");
 const addWordButton = getById("addWord");
 const configModal = getById("configModal");
 const wordClueModal = getById("hangmanModalClueWord");
+const winnerModal = getById("hangmanModalWinner");
+const loserModal = getById("hangmanModalDefeat");
 const btnClue = getById("clue");
 const wordClueText = getById("wordClueText");
 const messageLoser = getById("messageLoser");
@@ -31,6 +31,9 @@ const textErrorConfig = getById("textErrorConfig");
 const divImageError = getById("divImageError");
 const btnFlashWin = getById("flashWin");
 const clock = document.querySelector(".clock");
+const btnPlayTimer = getById("playTimer");
+const btnPauseTimer = getById("pauseTimer");
+const btnFlashLose = getById("flashLose");
 
 const jsConfeti = new JSConfetti();
 
@@ -41,8 +44,8 @@ var audioMiss = new Audio("assets/sound/miss.mp3");
 var audioTimerEven = new Audio("assets/sound/soundTimer1.mp3");
 var audioTimerOdd = new Audio("assets/sound/soundTimer2.mp3");
 
-const hangmanModalWinner = new bootstrap.Modal(getById("hangmanModalWinner"));
-const hangmanModalDefeat = new bootstrap.Modal(getById("hangmanModalDefeat"));
+const hangmanModalWinner = new bootstrap.Modal(winnerModal);
+const hangmanModalDefeat = new bootstrap.Modal(loserModal);
 const hangmanModalConfig = new bootstrap.Modal(configModal);
 
 let divError;
@@ -51,13 +54,13 @@ btnPlay.addEventListener("click", (e) => {
   playGame(e);
 });
 
-closeModalWinner.addEventListener("click", (e) => {
+winnerModal.addEventListener("hidden.bs.modal", (e) => {
   e.preventDefault();
   showConfetti = false;
   audioWinner.pause();
   audioWinner.currentTime = 0;
 });
-closeModalDefeat.addEventListener("click", (e) => {
+loserModal.addEventListener("hidden.bs.modal", (e) => {
   e.preventDefault();
   audioDefeat.pause();
   audioDefeat.currentTime = 0;
@@ -66,6 +69,27 @@ closeModalDefeat.addEventListener("click", (e) => {
 btnFlashWin.addEventListener("click", (e) => {
   e.preventDefault();
   flashWin();
+});
+btnFlashLose.addEventListener("click", (e) => {
+  e.preventDefault();
+  flashLose();
+});
+
+btnPlayTimer.addEventListener("click", (e) => {
+  e.preventDefault();
+  if(pauseTimer){
+    startTimerCountdown();
+    btnPlayTimer.disabled = true;
+    btnPauseTimer.disabled = false;
+  }
+});
+btnPauseTimer.addEventListener("click", (e) => {
+  e.preventDefault();
+  if(!pauseTimer){
+    stopTimerCountdown();
+    btnPauseTimer.disabled = true;
+    btnPlayTimer.disabled = false;
+  }
 });
 function allAlphabet(e) {
   switch (e.key.toLocaleLowerCase()) {
@@ -181,13 +205,12 @@ function allAlphabet(e) {
 }
 
 function pauseAudio(e) {
-  console.log("Se Preciono El espacio");
   switch (e.key.toLocaleLowerCase()) {
     case "-":
       if (pauseTimer) {
-        startTimerCountdown();
+        btnPlayTimer.click();
       } else {
-        stopTimerCountdown();
+        btnPauseTimer.click();
       }
       break;
   }
@@ -312,7 +335,9 @@ function playGame(event) {
   prize = words[randomNumber].prize;
 
   for (let i = 0; i < btnsLetters.length; i++) {
-    btnsLetters[i].disabled = false;
+    if(btnsLetters[i].id !== "pauseTimer"){
+      btnsLetters[i].disabled = false;
+    }
   }
   btnFlashWin.disabled = false;
 
@@ -326,7 +351,7 @@ function playGame(event) {
 }
 
 for (let i = 0; i < btnsLetters.length; i++) {
-  if (btnsLetters[i].id !== "flashWin") {
+  if (btnsLetters[i].id !== "flashWin" && btnsLetters[i].id !== "flashLose" && btnsLetters[i].id !== "playTimer" && btnsLetters[i].id !== "pauseTimer") {
     btnsLetters[i].addEventListener("click", (e) => {
       clickBtnLetter(e, btnsLetters[i]);
     });
@@ -342,6 +367,18 @@ function flashWin() {
   }
   setTimeout(function () {
     win(prize, word);
+  }, 300);
+}
+
+function flashLose() {
+  stopTimerCountdown();
+  const spans = document.querySelectorAll("#wordToGuess span");
+  const word = wordToGuess;
+  for (let i = 0; i < word.length; i++) {
+    spans[i].innerHTML = word[i];
+  }
+  setTimeout(function () {
+    lose(word);
   }, 300);
 }
 
@@ -577,7 +614,7 @@ configModal.addEventListener("hidden.bs.modal", (e) => {
 });
 
 wordClueModal.addEventListener("hidden.bs.modal", (e) => {
-  startTimerCountdown();
+  btnPlayTimer.click();
   btnClue.disabled = true;
   document.addEventListener("keydown", pauseAudio);
 });
