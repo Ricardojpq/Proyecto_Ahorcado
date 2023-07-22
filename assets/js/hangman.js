@@ -34,6 +34,7 @@ const clock = document.querySelector(".clock");
 const btnPlayTimer = getById("playTimer");
 const btnPauseTimer = getById("pauseTimer");
 const btnFlashLose = getById("flashLose");
+const btnSpaceBar = getById("spaceBar");
 
 const jsConfeti = new JSConfetti();
 
@@ -91,6 +92,19 @@ btnPauseTimer.addEventListener("click", (e) => {
     btnPlayTimer.disabled = false;
   }
 });
+
+btnSpaceBar.addEventListener("click",(e)=>{
+  const spans = document.querySelectorAll("#wordToGuess span");
+  var letterSpaceBar = " ";
+  for (let i = 0; i < wordToGuess.length; i++) {
+    if (letterSpaceBar === wordToGuess[i]) {
+      console.log(spans);
+      spans[i].classList.add("invisible");
+    }
+  }
+  clickBtnSpaceBar(e);
+})
+
 function allAlphabet(e) {
   switch (e.key.toLocaleLowerCase()) {
     case "a":
@@ -311,8 +325,8 @@ function stopAudioTimer() {
   audioTimerOdd.currentTime = 0;
 }
 function playGame(event) {
-  document.addEventListener("keydown", allAlphabet);
 
+  document.addEventListener("keydown", allAlphabet);
   btnPlay.disabled = true;
   btnClue.disabled = false;
   btnConfigGame.disabled = true;
@@ -342,16 +356,20 @@ function playGame(event) {
   btnFlashWin.disabled = false;
 
   var contLetters = wordToGuess.length;
-
+  var contLettersWithoutSpaces = 0;
   for (let i = 1; i <= contLetters; i++) {
     const span = document.createElement("span");
     pWordToGuess.appendChild(span);
+   if(wordToGuess[i] !== " "){
+    contLettersWithoutSpaces++;
+   }
   }
-  showTimer(contLetters, secondsForEachLetter);
+  showTimer(contLettersWithoutSpaces, secondsForEachLetter);
+  btnSpaceBar.click();
 }
 
 for (let i = 0; i < btnsLetters.length; i++) {
-  if (btnsLetters[i].id !== "flashWin" && btnsLetters[i].id !== "flashLose" && btnsLetters[i].id !== "playTimer" && btnsLetters[i].id !== "pauseTimer") {
+  if (btnsLetters[i].id !== "flashWin" && btnsLetters[i].id !== "flashLose" && btnsLetters[i].id !== "playTimer" && btnsLetters[i].id !== "pauseTimer" && btnsLetters[i].id !== "spaceBar") {
     btnsLetters[i].addEventListener("click", (e) => {
       clickBtnLetter(e, btnsLetters[i]);
     });
@@ -430,6 +448,22 @@ function clickBtnLetter(event, btnCliked) {
     lose(wordToGuess);
   } else if (contSuccess === wordToGuess.length) {
     win(prize, wordToGuess);
+  }
+}
+
+function clickBtnSpaceBar(event) {
+  const spans = document.querySelectorAll("#wordToGuess span");
+  const btn = event.target;
+  btn.disabled = true;
+
+  const letter = btn.innerHTML.toUpperCase();
+  const word = wordToGuess;
+
+  for (let i = 0; i < word.length; i++) {
+    if (letter === word[i]) {
+      spans[i].innerHTML = letter;
+      contSuccess++;
+    }
   }
 }
 
