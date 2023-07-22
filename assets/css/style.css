@@ -22,7 +22,7 @@ main {
     background-size: cover;
     background-position: 50% 50%;
     background-color: black;
-    background-image: url('../img/casinoTiuna.png');
+    background-image: url('../img/casinoTiunaPequeña.png');
     background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
