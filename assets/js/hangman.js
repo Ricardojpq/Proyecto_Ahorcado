@@ -10,6 +10,7 @@ let repeater;
 let soundTimer;
 let words = [];
 let pauseTimer = false;
+let AccumLetterAward = 0;
 
 const secondsForEachLetter = 8;
 const btnPlay = getById("play");
@@ -35,6 +36,11 @@ const btnPlayTimer = getById("playTimer");
 const btnPauseTimer = getById("pauseTimer");
 const btnFlashLose = getById("flashLose");
 const btnSpaceBar = getById("spaceBar");
+const consonantsValue = 10;
+const vowelValue = 5;
+const prizeValue = getById("prizeValue");
+const addToPrize = getById("addToPrize");
+const divAddToPrize = getById("divAddToPrize");
 
 const jsConfeti = new JSConfetti();
 
@@ -78,7 +84,7 @@ btnFlashLose.addEventListener("click", (e) => {
 
 btnPlayTimer.addEventListener("click", (e) => {
   e.preventDefault();
-  if(pauseTimer){
+  if (pauseTimer) {
     startTimerCountdown();
     btnPlayTimer.disabled = true;
     btnPauseTimer.disabled = false;
@@ -86,14 +92,14 @@ btnPlayTimer.addEventListener("click", (e) => {
 });
 btnPauseTimer.addEventListener("click", (e) => {
   e.preventDefault();
-  if(!pauseTimer){
+  if (!pauseTimer) {
     stopTimerCountdown();
     btnPauseTimer.disabled = true;
     btnPlayTimer.disabled = false;
   }
 });
 
-btnSpaceBar.addEventListener("click",(e)=>{
+btnSpaceBar.addEventListener("click", (e) => {
   const spans = document.querySelectorAll("#wordToGuess span");
   var letterSpaceBar = " ";
   for (let i = 0; i < wordToGuess.length; i++) {
@@ -103,7 +109,7 @@ btnSpaceBar.addEventListener("click",(e)=>{
     }
   }
   clickBtnSpaceBar(e);
-})
+});
 
 function allAlphabet(e) {
   switch (e.key.toLocaleLowerCase()) {
@@ -325,7 +331,7 @@ function stopAudioTimer() {
   audioTimerOdd.currentTime = 0;
 }
 function playGame(event) {
-
+  resetPrize();
   document.addEventListener("keydown", allAlphabet);
   btnPlay.disabled = true;
   btnClue.disabled = false;
@@ -349,7 +355,7 @@ function playGame(event) {
   prize = words[randomNumber].prize;
 
   for (let i = 0; i < btnsLetters.length; i++) {
-    if(btnsLetters[i].id !== "pauseTimer"){
+    if (btnsLetters[i].id !== "pauseTimer") {
       btnsLetters[i].disabled = false;
     }
   }
@@ -360,16 +366,22 @@ function playGame(event) {
   for (let i = 1; i <= contLetters; i++) {
     const span = document.createElement("span");
     pWordToGuess.appendChild(span);
-   if(wordToGuess[i] !== " "){
-    contLettersWithoutSpaces++;
-   }
+    if (wordToGuess[i] !== " ") {
+      contLettersWithoutSpaces++;
+    }
   }
   showTimer(contLettersWithoutSpaces, secondsForEachLetter);
   btnSpaceBar.click();
 }
 
 for (let i = 0; i < btnsLetters.length; i++) {
-  if (btnsLetters[i].id !== "flashWin" && btnsLetters[i].id !== "flashLose" && btnsLetters[i].id !== "playTimer" && btnsLetters[i].id !== "pauseTimer" && btnsLetters[i].id !== "spaceBar") {
+  if (
+    btnsLetters[i].id !== "flashWin" &&
+    btnsLetters[i].id !== "flashLose" &&
+    btnsLetters[i].id !== "playTimer" &&
+    btnsLetters[i].id !== "pauseTimer" &&
+    btnsLetters[i].id !== "spaceBar"
+  ) {
     btnsLetters[i].addEventListener("click", (e) => {
       clickBtnLetter(e, btnsLetters[i]);
     });
@@ -409,7 +421,7 @@ function clickBtnLetter(event, btnCliked) {
   const word = wordToGuess;
 
   let success = false;
-
+  let alreadyJoined = false;
   let imgError = document.createElement("img");
   imgError.src = "assets/img/X.svg";
   imgError.width = 60;
@@ -434,6 +446,15 @@ function clickBtnLetter(event, btnCliked) {
       audioSuccess.play();
       btnCliked.classList.remove("btn-secondary");
       btnCliked.classList.add("btn-success");
+
+      if(!alreadyJoined){
+        if (letter === "A" || letter === "E" || letter === "I" || letter === "O" || letter === "U") {
+          addValueToThePrize(vowelValue);
+        } else {
+          addValueToThePrize(consonantsValue);
+        }
+        alreadyJoined = true;
+      }
     }
   }
   if (success === false) {
@@ -443,7 +464,6 @@ function clickBtnLetter(event, btnCliked) {
     btnCliked.classList.remove("btn-secondary");
     btnCliked.classList.add("btn-danger");
   }
-
   if (contFail === 5) {
     lose(wordToGuess);
   } else if (contSuccess === wordToGuess.length) {
@@ -451,6 +471,29 @@ function clickBtnLetter(event, btnCliked) {
   }
 }
 
+function addValueToThePrize(valueToAdd){
+  let headerAddToPrize = document.createElement("h1");
+      
+  divAddToPrize.appendChild(headerAddToPrize);
+  headerAddToPrize.innerHTML = `${valueToAdd}$`;
+  headerAddToPrize.classList.add("magictime", "addToPrize", "holeOut");
+  prizeValue.classList.add("addToPrizeAnimation");
+  AccumLetterAward += Number(valueToAdd);
+  updatePrize();
+
+  setTimeout(() => {
+    prizeValue.classList.remove("addToPrizeAnimation");
+    divAddToPrize.removeChild(headerAddToPrize);
+  }, 1500);
+}
+
+function updatePrize(){
+  prizeValue.innerHTML = `${AccumLetterAward}$`;
+}
+function resetPrize(){
+  AccumLetterAward = 0;
+  updatePrize();
+}
 function clickBtnSpaceBar(event) {
   const spans = document.querySelectorAll("#wordToGuess span");
   const btn = event.target;
@@ -468,7 +511,7 @@ function clickBtnSpaceBar(event) {
 }
 
 function win(prize, wordToGuess) {
-  messageWinner.innerHTML = prize;
+  messageWinner.innerHTML = `${Number(prize) + AccumLetterAward}$`;
   showConfetti = true;
   throwConfetti();
   hangmanModalWinner.show();
@@ -547,6 +590,7 @@ function configHangman(listWords) {
   wordClueInput.value = listWords !== undefined ? listWords.wordClue : "";
   const PrizeInput = document.createElement("input");
   PrizeInput.className = "form-control ms-5";
+  PrizeInput.type="number";
   PrizeInput.value = listWords !== undefined ? listWords.prize : "";
   const deleteButton = document.createElement("button");
   deleteButton.className = "btn btn-sm btn-danger fw-bold text-center ms-2 my-1";

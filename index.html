@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="./assets/plugins/bootstrap-icons/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Poppins:wght@400;500;600&family=Roboto:ital,wght@0,100;0,300;0,400;1,100;1,300&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Poppins:wght@400;500;600&family=Roboto:ital,wght@0,100;0,300;0,400;1,100;1,300&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./assets/plugins/magic-master/magic.min.css">
     <script src="./assets/js/helpers.js"></script>
     <title>Casino Tiuna</title>
 </head>
@@ -74,13 +77,15 @@
                             class="bi bi-gear"></i></button>
                 </div>
                 <div class="d-flex justify-content-between align-items-center height-100px">
-                    <p id="wordToGuess" class="text-center ms-3 float-start"></p>
+                    <p id="wordToGuess" class="text-center ps-3 float-start"></p>
                     <div class="mb-3 float-end" id="divImageError"></div>
                 </div>
                 <div class="d-flex justify-content-center gap-5 mb-1 mt-3">
                     <button id="play" class="btn btn-dark-alternative me-5">Empezar</button>
                     <button id="clue" class="btn btn-secondary ms-3" data-bs-toggle="modal"
-                    data-bs-target="#hangmanModalClueWord" type="button" title="¡Pista!">Pista</button>
+                        data-bs-target="#hangmanModalClueWord" type="button" title="¡Pista!">Pista</button>
+                </div>
+                <div id="divAddToPrize">
                 </div>
                 <div class="d-flex justify-content-center">
                     <div id="letters">
@@ -110,32 +115,41 @@
                         <button class="btn text-center btn-secondary">U</button>
                         <button class="btn text-center btn-secondary">V</button>
                         <button class="btn text-center btn-secondary">W</button>
-                        <button class="btn text-center btn-secondary p-0" title="Lose" id="flashLose"><img src="assets/img/white-skull.svg" alt=""></button>
+                        <button class="btn text-center btn-secondary p-0" title="Lose" id="flashLose"><img
+                                src="assets/img/white-skull.svg" alt=""></button>
                         <button class="btn text-center btn-secondary">X</button>
                         <button class="btn text-center btn-secondary ">Y</button>
-                        <span class="btn text-center btn-secondary disabled" > </span>
+                        <span class="btn text-center btn-secondary disabled"> </span>
                         <span class="btn text-center btn-secondary invisible">none</span>
                         <button class="btn text-center btn-secondary">Z</button>
-                        <button class="btn text-center btn-secondary p-0" id="playTimer"><i class="bi bi-play-fill"></i></button>
-                        <button class="btn text-center btn-secondary p-0" id="pauseTimer"><i class="bi bi-pause-fill"></i></button>
+                        <button class="btn text-center btn-secondary p-0" id="playTimer"><i
+                                class="bi bi-play-fill"></i></button>
+                        <button class="btn text-center btn-secondary p-0" id="pauseTimer"><i
+                                class="bi bi-pause-fill"></i></button>
                         <button class="btn text-center" id="flashWin" title="Win">WIN</button>
                         <button class="btn text-center btn-secondary" hidden id="spaceBar"> </button>
                     </div>
                 </div>
-                <div class="container-timer">
-                    <div class="clock gradient-Radial-Red gradient-text">
-                        <span class="numberClock">00</span>
-                        <span>min</span>
-                        <span class="numberClock">00</span>
-                        <span>sec</span>
+                <div class="d-flex justify-content-between pb-2">
+                    <div class="prize-container text-white prizeValue">
+                        <h1 id="prizeValue">0$</h1>
+                    </div>
+                    <div class="container-timer">
+                        <div class="clock gradient-Radial-Red gradient-text">
+                            <span class="numberClock">00</span>
+                            <span>min</span>
+                            <span class="numberClock">00</span>
+                            <span>sec</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>           
+            </div>
         </section>
 
         <!-- Modal Winner-->
-        <div class="modal modal-lg fade w-50 h-75 ms-1" id="hangmanModalWinner" tabindex="-1" aria-labelledby="hangmanModalWinnerLabel" aria-hidden="true">
+        <div class="modal modal-lg fade w-50 h-75 ms-1" id="hangmanModalWinner" tabindex="-1"
+            aria-labelledby="hangmanModalWinnerLabel" aria-hidden="true">
             <div class="modal-dialog ">
                 <div class="modal-content">
                     <div class="modal-header justify-content-center">
@@ -155,7 +169,8 @@
 
         <!-- Modal Loser-->
 
-        <div class="modal fade w-50 h-75 ms-1" id="hangmanModalDefeat" tabindex="-1" aria-labelledby="hangmanModalDefeatLabel" aria-hidden="true">
+        <div class="modal fade w-50 h-75 ms-1" id="hangmanModalDefeat" tabindex="-1"
+            aria-labelledby="hangmanModalDefeatLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header justify-content-center">
@@ -173,7 +188,8 @@
         </div>
 
         <!-- Modal ClueWord-->
-        <div class="modal modal-lg fade w-50 h-75 ms-1" id="hangmanModalClueWord"  tabindex="-1" aria-labelledby="hangmanModalClueWordLabel" aria-hidden="true">
+        <div class="modal modal-lg fade w-50 h-75 ms-1" id="hangmanModalClueWord" tabindex="-1"
+            aria-labelledby="hangmanModalClueWordLabel" aria-hidden="true">
             <div class="modal-dialog ">
                 <div class="modal-content">
                     <div class="modal-header justify-content-center">
@@ -215,8 +231,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" 
-                            id="closeConfigModal">Cerrar</button>
+                        <button type="button" class="btn btn-secondary" id="closeConfigModal">Cerrar</button>
                     </div>
                 </div>
             </div>
