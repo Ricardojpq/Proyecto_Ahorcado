@@ -2,7 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Mukta:wght@400;500;600&family=Poppins:wght@400;500;600&family=Rubik:wght@400;500;600&display=swap');
 
 :root {
-    --durationAnimationAddToPrize: 2s;
+    --durationAnimationAddToPrizeIn: 1.5s;
+    --durationAnimationAddToPrizeOut:1.5s;
 }
 
 html,
@@ -33,17 +34,18 @@ html::-webkit-scrollbar-track{
 }
 html::-webkit-scrollbar-thumb{
     border-radius: 10px;
-    background-color: #F90; 
+    background-color: #F90;
     background-image: -webkit-radial-gradient(circle, #be011f 57%, #6a0110 100%);
-   
+
 }
 html::-webkit-scrollbar-thumb:hover {
     background-image: -webkit-radial-gradient(circle, #800217 57%, #6a0110 100%);
     box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
 } */
+
 main {
     height: 100%;
-    background-size: cover;
+    background-size: 80%;
     background-position: 50% 50%;
     background-color: black;
     background-image: url('../img/casinoTiuna.png');
@@ -66,6 +68,7 @@ main #hangmanContainer {
     background: rgba(43, 43, 43, 0.85);
     flex-shrink: 1;
     flex-grow: 1;
+    position: relative;
 }
 
 footer {
@@ -448,24 +451,12 @@ footer a:hover {
     padding: 0 0 0 10px;
 }
 
-#divAddToPrize {
-    margin: 0;
-    padding: 0;
-    width: 0;
-    height: 0;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 999;   
-}
 
 .addToPrize {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 300px;
-    height: 0;
-    width: 0;
+    font-size: 500px;
     padding: 0 0 0 5px;
     top: 0;
     left: 0;
@@ -473,19 +464,32 @@ footer a:hover {
     bottom: 0;
     margin: auto;
     position: absolute;
-    z-index: 998;
-    color: gold !important;
+    z-index: 1000;
+    background-image: linear-gradient(to right, #f9d423, #e65c00);
+    background-image: -webkit-linear-gradient(to right, #f9d423, #e65c00);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.magictime.holeOut {
-    -webkit-animation-duration: var(--durationAnimationAddToPrize);
-    animation-duration: var(--durationAnimationAddToPrize);
+#prizeValue {
+    line-height: 67px;
+    font-size: 64px;
 }
 
+.magictime.swashIn {
+    -webkit-animation-duration: var(--durationAnimationAddToPrizeIn);
+    animation-duration: var(--durationAnimationAddToPrizeIn);
+}
+.magictime.vanishOut {
+    -webkit-animation-duration: var(--durationAnimationAddToPrizeOut);
+    animation-duration: var(--durationAnimationAddToPrizeOut);
+}
 .addToPrizeAnimation {
     animation: addToPrize;
     animation-duration: 1s;
     animation-iteration-count: 1;
+    animation-delay: calc((var(--durationAnimationAddToPrizeIn) + var(--durationAnimationAddToPrizeOut)) + .5s);
 }
 
 @keyframes addToPrize {

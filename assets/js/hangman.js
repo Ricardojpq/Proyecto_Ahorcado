@@ -40,7 +40,10 @@ const consonantsValue = 10;
 const vowelValue = 5;
 const prizeValue = getById("prizeValue");
 const addToPrize = getById("addToPrize");
-const divAddToPrize = getById("divAddToPrize");
+const divHangmanContainer = getById("hangmanContainer");
+const durationAnimationAddToPrizeIn = 1500;
+const durationAnimationAddToPrizeOut = 1500;
+const durationAnimationPrizeValue = 1000;
 
 const jsConfeti = new JSConfetti();
 
@@ -474,17 +477,26 @@ function clickBtnLetter(event, btnCliked) {
 function addValueToThePrize(valueToAdd){
   let headerAddToPrize = document.createElement("h1");
       
-  divAddToPrize.appendChild(headerAddToPrize);
-  headerAddToPrize.innerHTML = `${valueToAdd}$`;
-  headerAddToPrize.classList.add("magictime", "addToPrize", "holeOut");
-  prizeValue.classList.add("addToPrizeAnimation");
+  divHangmanContainer.appendChild(headerAddToPrize);
+  headerAddToPrize.innerHTML = `+${valueToAdd}$`;
+  headerAddToPrize.classList.add("magictime", "addToPrize", "swashIn");
   AccumLetterAward += Number(valueToAdd);
-  updatePrize();
+  prizeValue.classList.add("addToPrizeAnimation");
+  
+  setTimeout(()=>{
+    headerAddToPrize.classList.remove("swashIn");
+    headerAddToPrize.classList.add("vanishOut");
+  },durationAnimationAddToPrizeIn + 200)
+
+  setTimeout(() => {
+    divHangmanContainer.removeChild(headerAddToPrize);
+    
+  }, durationAnimationAddToPrizeIn + durationAnimationAddToPrizeOut +200);
 
   setTimeout(() => {
     prizeValue.classList.remove("addToPrizeAnimation");
-    divAddToPrize.removeChild(headerAddToPrize);
-  }, 1500);
+    updatePrize();
+  }, durationAnimationAddToPrizeIn + durationAnimationAddToPrizeOut + durationAnimationPrizeValue);
 }
 
 function updatePrize(){
